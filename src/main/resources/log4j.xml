@@ -21,10 +21,7 @@
     <logger name="userMapper">
     	<level value="TRACE"></level>
     </logger>
-    <logger name="clothMapper">
-    	<level value="TRACE"></level>
-    </logger>
-     <logger name="clothHistoryMapper">
+    <logger name="productMapper">
     	<level value="TRACE"></level>
     </logger>
     
