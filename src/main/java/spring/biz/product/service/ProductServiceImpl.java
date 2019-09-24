@@ -35,22 +35,18 @@ public class ProductServiceImpl implements ProductService {
 		this.dao = dao;
 	}
 
-	@Override
 	public int addProd(ProductVO prod) {
 		return dao.addProd(prod);
 	}
 
-	@Override
 	public ProductVO detailProd(String prodid) {
 		return dao.detailProd(prodid);
 	}
 
-	@Override
-	public List<ProductVO> getProdList() {
-		return dao.getProdList();
+	public List<ProductVO> getProdList(String cateid) {
+		return dao.getProdList(cateid);
 	}
 
-	@Override
 	public ProductVO orderProd(String prod) {
 		return null;
 	}

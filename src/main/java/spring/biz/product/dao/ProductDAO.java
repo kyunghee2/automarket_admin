@@ -9,7 +9,7 @@ public interface ProductDAO {
 
 	ProductVO detailProd(String prod);
 
-	List<ProductVO> getProdList();
+	List<ProductVO> getProdList(String cateid);
 
 	ProductVO orderProd(String prod);
 }

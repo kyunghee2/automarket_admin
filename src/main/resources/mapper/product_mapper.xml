@@ -20,9 +20,10 @@
 	</select>
 
 	<select id="listprod" resultType="prodvo">
-		select prodid, prodnm, prodcnt,
-		cateid, prodprice, costprice, discount, expirydate, imgpath, delflag
-		from product order by regdate desc
+		select p.prodid, p.prodnm, p.prodcnt,
+		p.cateid, p.prodprice, p.costprice, p.discount, p.expirydate, p.imgpath, p.delflag, c.catenm
+		from product p, category c
+		where p.cateid = c.cateid and p.cateid = #{cateid}
 	</select>
 	
 	<!-- 주문하기 -->

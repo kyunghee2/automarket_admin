@@ -25,10 +25,10 @@ public class ProductController {
 		return service.detailProd(id);
 	}
 	
-	@RequestMapping(value = "/api/prodlist.do", method = RequestMethod.GET)
-	public List<ProductVO> getProdList() {
-	
-		
-		return service.getProdList();
+	@RequestMapping(value = "/api/prod/list.do", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ProductVO> getProdList(HttpServletRequest request) {
+		String id = request.getParameter("cid");
+		return service.getProdList(id);
 	}
 }
