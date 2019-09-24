@@ -9,7 +9,7 @@
    
    </select>
    <select id="login" parameterType="spring.biz.user.vo.UserVO" resultType="uservo">
-	  select * from userinfo 
+	  select * from userinfo
 	  where userid=#{userid} and userpwd = #{pwd}
   </select>
   <select id="getuser" resultType="uservo">
@@ -17,7 +17,7 @@
   </select>
   <insert id="adduser" parameterType="uservo">
   insert into userinfo (userid, name, userpwd, email) 
-  values (#{userid}, #{name}, #{pwd}, #{email}})
+  values (#{userid}, #{name}, #{pwd}, #{email})
   </insert>
   <select id="listuser" resultType="uservo">
   select userid,

@@ -4,11 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="spring.biz.user.vo.UserVO" alias="uservo"/>
+		<typeAlias type="spring.biz.user.vo.UserVO" alias="uservo" />
+		<typeAlias type="spring.biz.product.vo.ProductVO" alias="prodvo" />
 	</typeAliases>
-  
-  <mappers>
-    <mapper resource="mapper/user_mapper.xml"/>
-    
-  </mappers>
+
+	<mappers>
+		<mapper resource="mapper/user_mapper.xml" />
+		<mapper resource="mapper/product_mapper.xml" />
+
+	</mappers>
 </configuration>

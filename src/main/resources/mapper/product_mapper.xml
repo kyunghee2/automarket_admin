@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="productMapper">
+	<insert id="addprod" parameterType="prodvo">
+		insert into product (prodid,
+		prodnm, prodcnt, cateid, prodprice, costprice, discount, exprirydate,
+		regdate, imgpath, delflag)
+		values (#{prodid}, #{prodnm}, #{prodcnt},
+		#{cateid}, #{prodprice},
+		#{costprice}, #{discount}, #{expirydate},
+		#{regdate}, #{imgpath},
+		#{delflag})
+	</insert>
+
+	<select id="detailprod" resultType="prodvo">
+		select * from product
+		where prodid = #{prodid}
+	</select>
+
+	<select id="listprod" resultType="prodvo">
+		select prodid, prodnm, prodcnt,
+		cateid, prodprice, costprice, discount, expirydate, imgpath, delflag
+		from product order by regdate desc
+	</select>
+	
+	<!-- 주문하기 -->
+
+
+</mapper>
