@@ -61,6 +61,12 @@
 			reader.readAsDataURL(f);
 		});
 	}
+	
+	function prodCreate() {
+		f.action = "./add.do";
+		f.method = "post";
+		f.submit();
+	}
 </script>
 </head>
 
@@ -110,6 +116,7 @@
 												value="${prod.prodnm}">
 										</div>
 									</div>
+									
 									<div class="prodcnt">
 										<div id="prodcnt">
 											<label>상품 개수</label>
@@ -130,6 +137,7 @@
 												</c:forEach>
 											</select>
 										</div>
+										
 										<div id="c2">
 											<label>상품 가격</label>
 											<div class="prodprice">
@@ -150,7 +158,7 @@
 											<label>할인율</label>
 											<div class="discount">
 												<div id="discount">
-													<input min="1" max="100" type="number" id="discount"
+													<input min="0" max="100" type="number" id="discount"
 														placeholder="0" name="discount" value="${prod.discount}">
 												</div>
 											</div>
@@ -161,40 +169,21 @@
 								<div id="a3">
 									<div class="alocation">
 										<div id="l1">
-
 											<div>
 												<label>유통기한</label>
 												<input class="form-control" type="text" id="expirydate"
 													placeholder="Enter expirydate" name="expirydate"
 													required="required" value="${prod.expirydate}">
 											</div>
-
 										</div>
-										<div id="l2">
-											<div>
-												<label>등록 날짜</label>
-												<input class="form-control" type="text" id="regdate"
-													placeholder="Enter regdate" name="regdate"
-													required="required" value="${prod.regdate}">
-											</div>
-										</div>
-
-										<div id="l3">
-											<div>
-												<label>상품 삭제 여부</label>
-												<input class="form-control" type="text" id="delflag"
-													placeholder="Enter delflag" name="delflag"
-													required="required" value="${prod.delflag}">
-											</div>
-										</div>
-									</div>
 								</div>
 
 
-								<div id="a6">
+								<div id="a4">
 									<div class="col-sm-10">
-										<button id="add_prod_img" type="submit"
-											class="btn btn-primary">상품 등록하기</button>
+										<button id="add_prod_img" type="button"
+											class="btn btn-primary" onClick="prodCreate()">상품 등록하기</button>
+											
 										<input type="button" class="btn btn-primary"
 											id="go_to_myCloth_list"
 											onclick="location.href='${pageContext.request.contextPath}/clothes/myCloth_list.do'"
@@ -202,7 +191,6 @@
 									</div>
 								</div>
 							</div>
-
 						</form>
 					</div>
 

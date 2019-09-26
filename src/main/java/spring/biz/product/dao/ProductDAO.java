@@ -11,5 +11,7 @@ public interface ProductDAO {
 
 	List<ProductVO> getProdList(String cateid);
 
+	List<ProductVO> getProdList();
+
 	ProductVO orderProd(String prod);
 }

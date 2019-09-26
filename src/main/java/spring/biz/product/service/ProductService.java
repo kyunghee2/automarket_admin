@@ -10,6 +10,8 @@ public interface ProductService {
 	ProductVO detailProd(String prod);
 
 	List<ProductVO> getProdList(String cateid);
+	
+	List<ProductVO> getProdList();
 
 	ProductVO orderProd(String prod);
 

@@ -27,6 +27,10 @@ public class ProductDAO_MyBatis implements ProductDAO {
 	public List<ProductVO> getProdList(String cateid) {
 		return sqlSession.selectList("productMapper.listprod", cateid);
 	}
+	
+	public List<ProductVO> getProdList() {
+		return sqlSession.selectList("productMapper.alllistprod");
+	}
 
 	public ProductVO orderProd(String prod) {
 		return sqlSession.selectOne("productMapper.orderprod", prod);

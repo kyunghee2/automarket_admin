@@ -17,7 +17,7 @@ public class CategoryDAO_MyBatis implements CategoryDAO{
 
 	@Override
 	public List<CategoryVO> getCategoryList() {
-		return sqlSession.selectList("productMapper.categorylist");
+		return sqlSession.selectList("categoryMapper.categorylist");
 	}
 
 }
