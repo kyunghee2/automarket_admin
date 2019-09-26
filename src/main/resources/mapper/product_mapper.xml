@@ -3,29 +3,44 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="productMapper">
+
+	<!--  상품 추가 -->
 	<insert id="addprod" parameterType="prodvo">
 		insert into product (prodid,
 		prodnm, prodcnt, cateid, prodprice, costprice, discount, exprirydate,
 		regdate, imgpath, delflag)
-		values (#{prodid}, #{prodnm}, #{prodcnt},
-		#{cateid}, #{prodprice},
-		#{costprice}, #{discount}, #{expirydate},
+		select #{PRODUCT_SEQ.NEXTVAL}, #{prodnm},
+		#{cateid}, #{prodcnt}, #{prodprice},
+		#{costprice}, #{discount},
+		#{expirydate},
 		#{regdate}, #{imgpath},
-		#{delflag})
+		#{delflag}
+		FROM DUAL
 	</insert>
 
+	<!--  상품 자세히 보기 -->
 	<select id="detailprod" resultType="prodvo">
 		select * from product
-		where prodid = #{prodid}
+		where
+		prodid = #{prodid}
 	</select>
-
+	
+	
+	<!--  카테고리별 상품 리스트 보기 -->
 	<select id="listprod" resultType="prodvo">
-		select p.prodid, p.prodnm, p.prodcnt,
-		p.cateid, p.prodprice, p.costprice, p.discount, p.expirydate, p.imgpath, p.delflag, c.catenm
+		select p.prodid, p.prodnm,
+		p.prodcnt,
+		p.cateid, p.prodprice, p.costprice, p.discount,
+		p.expirydate, p.imgpath, p.delflag, c.catenm
 		from product p, category c
 		where p.cateid = c.cateid and p.cateid = #{cateid}
 	</select>
 	
+	<!-- 카테고리 리스트 -->
+	<select id="categorylist" resultType="prodvo">
+		select * from category
+	</select>
+
 	<!-- 주문하기 -->
 
 
