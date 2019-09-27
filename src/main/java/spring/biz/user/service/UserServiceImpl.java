@@ -36,18 +36,18 @@ public class UserServiceImpl implements UserService {
 		this.dao = dao;
 	}
 
-	public UserVO login(String id, String pw) {
+	public UserVO login(String email, String pw) {
 
 		String msg = "";
 		UserVO vo = null;
 		try {
-			vo = dao.login(id, pw);
+			vo = dao.login(email, pw);
 
 			if (vo != null) {
 				msg = context.getMessage("login.success", new Object[] { vo.getName() }, Locale.KOREA);
 
 			} else {
-				msg = context.getMessage("login.fail", new Object[] { id }, Locale.KOREA);
+				msg = context.getMessage("login.fail", new Object[] { email }, Locale.KOREA);
 				// System.out.println(4/0);
 			}
 		} catch (Exception e) {
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
 	public int removeUser(String uid) {
 		return dao.removeUser(uid);
 	}
-	public UserVO getIdCheck(String uid) {
-		return dao.getUser(uid);
+	public UserVO getEmailCheck(String email) {
+		return dao.getUser(email);
 	}
 }

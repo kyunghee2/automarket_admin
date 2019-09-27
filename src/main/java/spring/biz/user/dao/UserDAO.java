@@ -5,7 +5,7 @@ import java.util.List;
 import spring.biz.user.vo.UserVO;
 
 public interface UserDAO {
-	UserVO login(String id, String pw) throws Exception;
+	UserVO login(String email, String pw) throws Exception;
 	
 	int addUser(UserVO user); 
 	
@@ -16,5 +16,7 @@ public interface UserDAO {
 	int updateUser(UserVO user);
 	
 	int removeUser(String uid);
+	
+	UserVO getEmailCheck(String email);
 	
 }

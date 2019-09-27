@@ -31,7 +31,7 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.jsp"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>Dashboard</span></a>
+				href="${pageContext.request.contextPath}/index.do"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>Dashboard</span></a>
 			</li>
 
 			<!-- Divider -->
@@ -40,17 +40,17 @@
 			<!-- Heading -->
 			<div class="sidebar-heading">Addons</div>
 			<!-- Nav Item - 차량관리 -->
-			<li class="nav-item"><a class="nav-link" href="charts.html">
+			<li class="nav-item"><a class="nav-link" href="">
 					<i class="fas fa-fw fa-chart-area"></i> <span>차량 관리</span>
 			</a></li>
 
 			<!-- Nav Item - 식품관리 -->
-			<li class="nav-item"><a class="nav-link" href="charts.html">
+			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/prod/alllist.do">
 					<i class="fas fa-fw fa-chart-area"></i> <span>상품 관리</span>
 			</a></li>
 
 			<!-- Nav Item - 사용자 관리 -->
-			<li class="nav-item"><a class="nav-link" href="tables.html">
+			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/user/list.do">
 					<i class="fas fa-fw fa-table"></i> <span>사용자 관리</span>
 			</a></li>
 

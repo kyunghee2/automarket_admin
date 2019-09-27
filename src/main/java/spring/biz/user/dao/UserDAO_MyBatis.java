@@ -15,10 +15,10 @@ public class UserDAO_MyBatis implements UserDAO{
 	
 	public UserDAO_MyBatis() {
 	}
-	public UserVO login(String id, String pw) {
+	public UserVO login(String email, String pw) {
 		
 		UserVO vo =new UserVO();
-		vo.setUserid(id);
+		vo.setUseremail(email);
 		vo.setPwd(pw);
 		
 		return sqlSession.selectOne("userMapper.login", vo);
@@ -42,6 +42,10 @@ public class UserDAO_MyBatis implements UserDAO{
 
 	public int removeUser(String userid) {		
 		return sqlSession.update("userMapper.removeuser",userid);
+	}
+	
+	public UserVO getEmailCheck(String email) {
+		return sqlSession.selectOne("userMapper.getEmailCheck", email);
 	}
 
 }

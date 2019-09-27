@@ -28,16 +28,13 @@ public class UserController {
 	@Value("${secretkey}") 
 	private String key;
 		
-	@RequestMapping(value = "/api/userIdCheck.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/userEmailCheck.do", method = RequestMethod.GET)
 	@ResponseBody
 	public UserVO getUser(HttpServletRequest request) {	
-		String id = request.getParameter("uid");
-		return service.getIdCheck(id);
+		String email = request.getParameter("email");
+		return service.getEmailCheck(email);
 	}
-	@RequestMapping(value = "/user/join.do", method = RequestMethod.GET)
-	public String addJoin() {	
-		return "user/user_join";
-	}
+	
 	@RequestMapping("/user/list.do")
 	public ModelAndView getUserList() {
 		ModelAndView view = new ModelAndView();
@@ -46,37 +43,51 @@ public class UserController {
 		view.setViewName("user/user_list");
 		return view;
 	}
-	@RequestMapping(value = "/login.do",method = RequestMethod.POST)
-	public String loginProc(UserVO vo,HttpServletRequest request) throws Exception {
+	
+	@RequestMapping(value = "/api/login.do",method = RequestMethod.GET)
+	public String login() {
+		//return "/login";// view페이지 리턴
+		return "redirect:/api/login.do";
+	}
+	
+	@RequestMapping(value = "/api/login.do",method = RequestMethod.POST)
+	public String loginProc(UserVO vo, HttpServletRequest request) throws Exception {
 		AES256Util aes256 = new AES256Util(key);			
 		String acs_pwd = aes256.aesEncode(vo.getPwd());
 		
-		UserVO user = service.login(vo.getUserid(), acs_pwd);
+		System.out.println(vo.getUseremail());
+		System.out.println(vo.getPwd());
+		
+		UserVO user = service.login(vo.getUseremail(), acs_pwd);
 		if(user != null) {
 			request.getSession().setAttribute("User", user);
 			request.getSession().setAttribute("login", user);
 			
-			return "redirect:index.do";
+			return "redirect:/index.do";
 		}else {
 			request.setAttribute("msg", "로그인 정보를 다시 입력하세요.");			
-			return "redirect:login.do";
+			return "redirect:/api/login.do";
 		}
 	}
+	
 	@RequestMapping(value = "/index.do",method = RequestMethod.GET)
-	public String index(HttpServletRequest request) {
+	public ModelAndView index(HttpServletRequest request) {
 		
-//		UserVO vo = (UserVO) request.getSession().getAttribute("login");
-//		String userid=vo.getUserid();
+		UserVO vo = (UserVO) request.getSession().getAttribute("login");
+		String useremail=vo.getUseremail();
 
-//		ModelAndView view = new ModelAndView();
-//		view.setViewName("index");
-//		return view;
-		
-		return "redirect:index";
-
+		ModelAndView view = new ModelAndView();
+		view.setViewName("index");
+		return view;
 	}
+	
 	//회원가입
-	@RequestMapping(value = "/user/add.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/register.do", method = RequestMethod.GET)
+	public String addJoin() {	
+		return "register";
+	}
+	
+	@RequestMapping(value = "/api/register.do", method = RequestMethod.POST)
 	public String addUserProc(@ModelAttribute("user") UserVO vo,HttpServletRequest request,BindingResult errors) {	
 
 		System.out.println(vo); 
@@ -90,10 +101,10 @@ public class UserController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "user/user_write";
+			return "register";
 		}			
 		
-		return "user/user_join_result";
+		return "redirect:/login.jsp";
 	}
 	
 	@ExceptionHandler(Exception.class)

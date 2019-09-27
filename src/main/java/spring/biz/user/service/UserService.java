@@ -5,7 +5,7 @@ import java.util.List;
 import spring.biz.user.vo.UserVO;
 
 public interface UserService {
-	UserVO login(String id, String pw) throws Exception;
+	UserVO login(String email, String pw) throws Exception;
 	
 	int addUser(UserVO user);
 	
@@ -17,6 +17,6 @@ public interface UserService {
 	
 	int removeUser(String uid);
 
-	UserVO getIdCheck(String uid);
+	UserVO getEmailCheck(String email);
 	
 }

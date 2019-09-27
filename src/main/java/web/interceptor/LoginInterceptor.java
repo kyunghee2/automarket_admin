@@ -18,7 +18,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		if(vo != null) {
 			return true;
 		}else {
-			ModelAndView mav = new ModelAndView("redirect:/login.do");
+			ModelAndView mav = new ModelAndView("redirect:/api/login.do");
 			throw new ModelAndViewDefiningException(mav);
 		}
 		

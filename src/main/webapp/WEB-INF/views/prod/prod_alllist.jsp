@@ -106,8 +106,10 @@
 
 						<table>
 							<tr>
-								<td><button onclick="location.href='./add.do'" class="btn btn-primary">상품 등록</button></td>
+								<td><button onclick="location.href='${pageContext.request.contextPath}/prod/add.do'" class="btn btn-primary">상품 등록</button></td>
+								<td><button onclick="location.href='${pageContext.request.contextPath}/index.do'" class="btn btn-primary">Home</button></td>
 							</tr>
+							
 						</table>
 
 

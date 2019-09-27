@@ -13,8 +13,8 @@ public class UserValidator implements Validator{
 
 	public void validate(Object target, Errors errors) {
 		UserVO vo=(UserVO) target;
-		if(vo.getUserid() == null || vo.getUserid().trim().isEmpty()) {
-			errors.rejectValue("userid", "required");
+		if(vo.getUseremail() == null || vo.getUseremail().trim().isEmpty()) {
+			errors.rejectValue("useremail", "required");
 		}
 		
 	}
