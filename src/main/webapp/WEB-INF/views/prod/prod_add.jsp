@@ -64,7 +64,7 @@
 	
 	function prodCreate() {
 		f.action = "./add.do";
-		f.method = "post";
+		f.method = "POST";
 		f.submit();
 	}
 </script>
@@ -186,7 +186,7 @@
 											
 										<input type="button" class="btn btn-primary"
 											id="go_to_myCloth_list"
-											onclick="location.href='${pageContext.request.contextPath}/clothes/myCloth_list.do'"
+											onclick="location.href='${pageContext.request.contextPath}/prod/alllist.do'"
 											value="상품 리스트보기"></input>
 									</div>
 								</div>

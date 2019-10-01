@@ -19,4 +19,6 @@ public interface UserDAO {
 	
 	UserVO getEmailCheck(String email);
 	
+	UserVO getLogin(String email);
+	
 }

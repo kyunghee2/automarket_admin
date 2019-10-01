@@ -47,5 +47,9 @@ public class UserDAO_MyBatis implements UserDAO{
 	public UserVO getEmailCheck(String email) {
 		return sqlSession.selectOne("userMapper.getEmailCheck", email);
 	}
+	
+	public UserVO getLogin(String email) {
+		return sqlSession.selectOne("userMapper.getLogin", email);
+	}
 
 }

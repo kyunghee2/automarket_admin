@@ -35,6 +35,10 @@ public class UserServiceImpl implements UserService {
 	public void setDao(UserDAO dao) {
 		this.dao = dao;
 	}
+	
+	public UserVO getLogin(String email) {
+		return dao.getUser(email);
+	}
 
 	public UserVO login(String email, String pw) {
 

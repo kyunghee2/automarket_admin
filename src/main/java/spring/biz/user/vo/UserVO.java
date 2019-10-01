@@ -2,7 +2,7 @@ package spring.biz.user.vo;
 
 public class UserVO {
 	private String userid;
-	private String useremail;
+	private String email;
 	private String pwd;
 	private String cashamt;
 	private String adminflag;
@@ -14,11 +14,20 @@ public class UserVO {
 		super();
 	}
 
-	public UserVO(String userid, String useremail, String pwd, String cashamt, String adminflag, String regdate,
+	public UserVO(String email, String pwd, String adminflag, String deviceid, String name) {
+		super();
+		this.email = email;
+		this.pwd = pwd;
+		this.adminflag = adminflag;
+		this.deviceid = deviceid;
+		this.name = name;
+	}
+
+	public UserVO(String userid, String email, String pwd, String cashamt, String adminflag, String regdate,
 			String deviceid, String name) {
 		super();
 		this.userid = userid;
-		this.useremail = useremail;
+		this.email = email;
 		this.pwd = pwd;
 		this.cashamt = cashamt;
 		this.adminflag = adminflag;
@@ -42,10 +51,10 @@ public class UserVO {
 		this.userid = userid;
 	}
 	public String getUseremail() {
-		return useremail;
+		return email;
 	}
-	public void setUseremail(String useremail) {
-		this.useremail = useremail;
+	public void setUseremail(String email) {
+		this.email = email;
 	}
 	public String getPwd() {
 		return pwd;
@@ -79,7 +88,7 @@ public class UserVO {
 	}
 	@Override
 	public String toString() {
-		return "UserVO [userid=" + userid + ", useremail=" + useremail + ", pwd=" + pwd + ", cashamt=" + cashamt
+		return "UserVO [userid=" + userid + ", email=" + email + ", pwd=" + pwd + ", cashamt=" + cashamt
 				+ ", adminflag=" + adminflag + ", regdate=" + regdate + ", deviceid=" + deviceid + "]";
 	}
 	

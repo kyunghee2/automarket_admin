@@ -1,5 +1,8 @@
 package web.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,91 +28,138 @@ import util.AES256Util;
 public class UserController {
 	@Autowired
 	UserService service;
-	
-	@Value("${secretkey}") 
+
+	@Value("${secretkey}")
 	private String key;
-		
+
+	// 로그인시 이메일 체크 api
 	@RequestMapping(value = "/api/userEmailCheck.do", method = RequestMethod.GET)
 	@ResponseBody
-	public UserVO getUser(HttpServletRequest request) {	
+	public UserVO getUser(HttpServletRequest request) {
 		String email = request.getParameter("email");
 		return service.getEmailCheck(email);
 	}
-	
+
+	// 관리자 페이지 사용자 리스트
 	@RequestMapping("/user/list.do")
 	public ModelAndView getUserList() {
 		ModelAndView view = new ModelAndView();
-		
+
 		view.addObject("users", service.getUserList());
 		view.setViewName("user/user_list");
 		return view;
 	}
-	
-	@RequestMapping(value = "/api/login.do",method = RequestMethod.GET)
+
+	// 관리자 페이지 로그인 get
+	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
 	public String login() {
-		//return "/login";// view페이지 리턴
-		return "redirect:/api/login.do";
+		// return "/login";// view페이지 리턴
+		return "redirect:/login.do";
 	}
-	
-	@RequestMapping(value = "/api/login.do",method = RequestMethod.POST)
+
+	// 관리자 페이지 로그인 post
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String loginProc(UserVO vo, HttpServletRequest request) throws Exception {
-		AES256Util aes256 = new AES256Util(key);			
+		AES256Util aes256 = new AES256Util(key);
 		String acs_pwd = aes256.aesEncode(vo.getPwd());
-		
+
 		System.out.println(vo.getUseremail());
 		System.out.println(vo.getPwd());
-		
+
 		UserVO user = service.login(vo.getUseremail(), acs_pwd);
-		if(user != null) {
+		if (user != null) {
 			request.getSession().setAttribute("User", user);
 			request.getSession().setAttribute("login", user);
-			
+
 			return "redirect:/index.do";
-		}else {
-			request.setAttribute("msg", "로그인 정보를 다시 입력하세요.");			
-			return "redirect:/api/login.do";
+		} else {
+			request.setAttribute("msg", "로그인 정보를 다시 입력하세요.");
+			return "redirect:/login.do";
 		}
 	}
-	
-	@RequestMapping(value = "/index.do",method = RequestMethod.GET)
+
+	// login api
+	@RequestMapping(value = "/api/login.do", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> getlogin(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String email = request.getParameter("email");
+		UserVO user = service.getLogin(email);
+		map.put("userid", user.getUserid());
+		map.put("email", user.getUseremail());
+		map.put("cashamt", user.getCashamt());
+		map.put("adminflag", user.getAdminflag());
+		map.put("name", user.getName());
+		return map;
+	}
+
+	// 메인페이지
+	@RequestMapping(value = "/index.do", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request) {
-		
+
 		UserVO vo = (UserVO) request.getSession().getAttribute("login");
-		String useremail=vo.getUseremail();
+		String useremail = vo.getUseremail();
 
 		ModelAndView view = new ModelAndView();
 		view.setViewName("index");
 		return view;
 	}
-	
-	//회원가입
-	@RequestMapping(value = "/api/register.do", method = RequestMethod.GET)
-	public String addJoin() {	
+
+	// 관리자 페이지 회원가입 get 
+	@RequestMapping(value = "/register.do", method = RequestMethod.GET)
+	public String addJoin() {
 		return "register";
 	}
-	
-	@RequestMapping(value = "/api/register.do", method = RequestMethod.POST)
-	public String addUserProc(@ModelAttribute("user") UserVO vo,HttpServletRequest request,BindingResult errors) {	
 
-		System.out.println(vo); 
-		
+	// 관리자 페이지 회원가입 post
+	@RequestMapping(value = "/register.do", method = RequestMethod.POST)
+	public String addUserProc(@ModelAttribute("user") UserVO vo, HttpServletRequest request, BindingResult errors) {
+
+		System.out.println(vo);
+
 		try {
-			AES256Util aes256 = new AES256Util(key);			
+			AES256Util aes256 = new AES256Util(key);
 			String acs_pwd = aes256.aesEncode(vo.getPwd());
 			vo.setPwd(acs_pwd);
-			
+			vo.setDeviceid("");
+
 			service.addUser(vo);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "register";
-		}			
-		
+		}
+
 		return "redirect:/login.jsp";
 	}
 	
+	// register api
+	@RequestMapping(value = "/api/register.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getregister(@RequestBody UserVO vo, BindingResult errors) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		System.out.println("user vo : " + vo);
+		//System.out.println(request.getParameter("pwd"));
+		try {
+			AES256Util aes256 = new AES256Util(key);
+			String acs_pwd = aes256.aesEncode(vo.getPwd());
+			vo.setPwd(acs_pwd);
+			int result = service.addUser(vo);
+			System.out.println("user vo after : " + vo);
+			map.put("status", 1);
+			map.put("msg", "" );
+			System.out.println("register result : " + result);
+		} catch (Exception e) {
+			map.put("status", 0);
+			map.put("msg", e.getMessage() );
+			System.out.println("register result : " + e.getStackTrace());
+		}
+		return map;
+	}
+
 	@ExceptionHandler(Exception.class)
-	public String Ex(Exception exception,Model model) {
+	public String Ex(Exception exception, Model model) {
 		// UserController 예외발생시 호출됨
 		model.addAttribute("exception", exception);
 		return "error";

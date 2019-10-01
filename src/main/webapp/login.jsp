@@ -46,7 +46,7 @@
                     <h1 class="h4 text-gray-900 mb-4">Welcome!</h1>
                   </div>
                   
-                  <form class="user" action="api/login.do" method="POST">
+                  <form class="user" action="login.do" method="POST">
                     <div class="form-group">
                       <input type="id" class="form-control form-control-user" id="useremail" name="useremail" aria-describedby="emailHelp" placeholder="Enter Email">
                     </div>
@@ -75,7 +75,7 @@
                     <a class="small" href="forgot-password.jsp">Forgot Password?</a>
                   </div>
                   <div class="text-center">
-                    <a class="small" href="./api/register.do">Create an Account!</a>
+                    <a class="small" href="${pageContext.request.contextPath}/register.do">Create an Account!</a>
                     
                   </div>
                 </div>

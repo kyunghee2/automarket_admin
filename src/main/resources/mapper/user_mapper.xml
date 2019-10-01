@@ -5,22 +5,31 @@
 <mapper namespace="userMapper">
 	<select id="getEmailCheck" resultType="uservo">
 		select email
-		from userinfo where email = #{useremail}
+		from userinfo where email = #{email}
 	</select>
 	
 	<select id="login" parameterType="spring.biz.user.vo.UserVO"
 		resultType="uservo">
-		select * from userinfo
-		where email = #{useremail} and pwd = #{pwd}
+		select userid, email, cashamt, adminflag, name
+		from userinfo
+		where email = #{email} and pwd = #{pwd}
 	</select>
 
 	<select id="getuser" resultType="uservo">
-		select * from userinfo where email = #{useremail}
+		select userid, email, cashamt, adminflag, name
+		from userinfo
+		where email = #{email}
+	</select>
+	
+	<select id="getLogin" resultType="uservo">
+		select userid, email, cashamt, adminflag, name
+		from userinfo
+		where email = #{email}
 	</select>
 
 	<insert id="adduser" parameterType="uservo">
-		insert into userinfo (userid, email, pwd, regdate, name)
-		select USERINFO_SEQ.NEXTVAL, #{useremail}, #{pwd}, sysdate, #{name}
+		insert into userinfo (userid, email, pwd, regdate, name, deviceid)
+		select USERINFO_SEQ.NEXTVAL, #{email}, #{pwd}, sysdate, #{name}, nvl(#{deviceid} , ' ')
 		FROM DUAL
 	</insert>
 

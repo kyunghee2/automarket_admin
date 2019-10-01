@@ -18,5 +18,7 @@ public interface UserService {
 	int removeUser(String uid);
 
 	UserVO getEmailCheck(String email);
+
+	UserVO getLogin(String email);
 	
 }
