@@ -48,7 +48,7 @@
                   
                   <form class="user" action="login.do" method="POST">
                     <div class="form-group">
-                      <input type="id" class="form-control form-control-user" id="useremail" name="useremail" aria-describedby="emailHelp" placeholder="Enter Email">
+                      <input type="id" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter Email">
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="pwd" name="pwd" placeholder="Enter Password">

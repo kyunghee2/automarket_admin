@@ -62,7 +62,7 @@ public class UserController {
 	public String loginProc(UserVO vo, HttpServletRequest request) throws Exception {
 		AES256Util aes256 = new AES256Util(key);
 		String acs_pwd = aes256.aesEncode(vo.getPwd());
-
+		System.out.println(vo);
 		System.out.println(vo.getEmail());
 		System.out.println(vo.getPwd());
 

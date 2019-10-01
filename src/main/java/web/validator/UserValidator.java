@@ -14,7 +14,7 @@ public class UserValidator implements Validator{
 	public void validate(Object target, Errors errors) {
 		UserVO vo=(UserVO) target;
 		if(vo.getEmail() == null || vo.getEmail().trim().isEmpty()) {
-			errors.rejectValue("useremail", "required");
+			errors.rejectValue("email", "required");
 		}
 		
 	}

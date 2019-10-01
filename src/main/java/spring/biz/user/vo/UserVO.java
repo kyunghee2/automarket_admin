@@ -14,14 +14,14 @@ public class UserVO {
 		super();
 	}
 
-	public UserVO(String email, String pwd, String adminflag, String deviceid, String name) {
-		super();
-		this.email = email;
-		this.pwd = pwd;
-		this.adminflag = adminflag;
-		this.deviceid = deviceid;
-		this.name = name;
-	}
+//	public UserVO(String email, String pwd, String adminflag, String deviceid, String name) {
+//		super();
+//		this.email = email;
+//		this.pwd = pwd;
+//		this.adminflag = adminflag;
+//		this.deviceid = deviceid;
+//		this.name = name;
+//	}
 
 	public UserVO(String userid, String email, String pwd, String cashamt, String adminflag, String regdate,
 			String deviceid, String name) {
