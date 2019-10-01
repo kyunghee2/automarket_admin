@@ -50,12 +50,15 @@ public class UserVO {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-	public String getUseremail() {
+	
+	public String getEmail() {
 		return email;
 	}
-	public void setUseremail(String email) {
+
+	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPwd() {
 		return pwd;
 	}

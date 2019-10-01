@@ -18,7 +18,7 @@ public class UserDAO_MyBatis implements UserDAO{
 	public UserVO login(String email, String pw) {
 		
 		UserVO vo =new UserVO();
-		vo.setUseremail(email);
+		vo.setEmail(email);
 		vo.setPwd(pw);
 		
 		return sqlSession.selectOne("userMapper.login", vo);

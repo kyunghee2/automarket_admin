@@ -63,10 +63,10 @@ public class UserController {
 		AES256Util aes256 = new AES256Util(key);
 		String acs_pwd = aes256.aesEncode(vo.getPwd());
 
-		System.out.println(vo.getUseremail());
+		System.out.println(vo.getEmail());
 		System.out.println(vo.getPwd());
 
-		UserVO user = service.login(vo.getUseremail(), acs_pwd);
+		UserVO user = service.login(vo.getEmail(), acs_pwd);
 		if (user != null) {
 			request.getSession().setAttribute("User", user);
 			request.getSession().setAttribute("login", user);
@@ -86,7 +86,7 @@ public class UserController {
 		String email = request.getParameter("email");
 		UserVO user = service.getLogin(email);
 		map.put("userid", user.getUserid());
-		map.put("email", user.getUseremail());
+		map.put("email", user.getEmail());
 		map.put("cashamt", user.getCashamt());
 		map.put("adminflag", user.getAdminflag());
 		map.put("name", user.getName());
@@ -98,7 +98,7 @@ public class UserController {
 	public ModelAndView index(HttpServletRequest request) {
 
 		UserVO vo = (UserVO) request.getSession().getAttribute("login");
-		String useremail = vo.getUseremail();
+		String useremail = vo.getEmail();
 
 		ModelAndView view = new ModelAndView();
 		view.setViewName("index");
@@ -134,7 +134,7 @@ public class UserController {
 	}
 	
 	// register api
-	@RequestMapping(value = "/api/register.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/register.do",consumes = "application/json", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> getregister(@RequestBody UserVO vo, BindingResult errors) {
 		Map<String, Object> map = new HashMap<String, Object>();
