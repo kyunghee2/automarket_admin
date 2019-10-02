@@ -15,6 +15,7 @@ public class UserDAO_MyBatis implements UserDAO{
 	
 	public UserDAO_MyBatis() {
 	}
+	
 	public UserVO login(String email, String pw) {
 		
 		UserVO vo =new UserVO();

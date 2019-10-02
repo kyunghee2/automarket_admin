@@ -7,12 +7,14 @@
 		<typeAlias type="spring.biz.user.vo.UserVO" alias="uservo" />
 		<typeAlias type="spring.biz.product.vo.ProductVO" alias="prodvo" />
 		<typeAlias type="spring.biz.category.vo.CategoryVO" alias="catevo" />		
+		<typeAlias type="spring.biz.orderinfo.vo.OrderinfoVO" alias="orderinfovo" />		
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mapper/user_mapper.xml" />
 		<mapper resource="mapper/product_mapper.xml" />
 		<mapper resource="mapper/category_mapper.xml" />
+		<mapper resource="mapper/orderinfo_mapper.xml" />
 
 	</mappers>
 </configuration>

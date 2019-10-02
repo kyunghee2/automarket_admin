@@ -4,7 +4,7 @@ public class UserVO {
 	private String userid;
 	private String email;
 	private String pwd;
-	private String cashamt;
+	private int cashamt;
 	private String adminflag;
 	private String regdate;
 	private String deviceid;
@@ -23,7 +23,7 @@ public class UserVO {
 //		this.name = name;
 //	}
 
-	public UserVO(String userid, String email, String pwd, String cashamt, String adminflag, String regdate,
+	public UserVO(String userid, String email, String pwd, int cashamt, String adminflag, String regdate,
 			String deviceid, String name) {
 		super();
 		this.userid = userid;
@@ -65,10 +65,10 @@ public class UserVO {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	public String getCashamt() {
+	public int getCashamt() {
 		return cashamt;
 	}
-	public void setCashamt(String cashamt) {
+	public void setCashamt(int cashamt) {
 		this.cashamt = cashamt;
 	}
 	public String getAdminflag() {

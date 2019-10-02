@@ -24,6 +24,9 @@
     <logger name="productMapper">
     	<level value="TRACE"></level>
     </logger>
+        <logger name="orderinfoMapper">
+    	<level value="TRACE"></level>
+    </logger>
     
      <root>
         <level value="INFO" /><!-- INFO :console,log파일에 기록 -->
