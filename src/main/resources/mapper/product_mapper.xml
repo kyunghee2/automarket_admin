@@ -42,7 +42,5 @@
 		where p.cateid = c.cateid and p.cateid = #{cateid}
 	</select>
 	
-	<!-- 주문하기 -->
-	
 </mapper>
 

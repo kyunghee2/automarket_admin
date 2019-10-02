@@ -13,6 +13,4 @@ public interface ProductService {
 	
 	List<ProductVO> getProdList();
 
-	ProductVO orderProd(String prod);
-
 }

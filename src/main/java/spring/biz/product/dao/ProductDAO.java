@@ -13,5 +13,4 @@ public interface ProductDAO {
 
 	List<ProductVO> getProdList();
 
-	ProductVO orderProd(String prod);
 }

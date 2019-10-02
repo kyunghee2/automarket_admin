@@ -50,10 +50,5 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductVO> getProdList() {
 		return dao.getProdList();
 	}
-
-	public ProductVO orderProd(String prod) {
-		return null;
-	}
-	
 	
 }

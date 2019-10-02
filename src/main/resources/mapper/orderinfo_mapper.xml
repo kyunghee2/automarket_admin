@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="orderinfoMapper">
+	<!-- 주문하기 -->
 	<insert id="addorder" parameterType="orderinfovo">
 		insert into orderinfo
 		(orderid, userid, orderdate, totalprice, carid, receiptaddr,
@@ -13,14 +14,41 @@
 		FROM DUAL
 	</insert>
 	
-	<insert id="prodorder" parameterType="orderinfovo">
+	<!-- 주문 상세 -->
+	<select id="detailorder" resultType="orderinfovo">
+		select d.prodid, d.prodnm, d.prodprice, d.ordercnt 
+		from orderdetail d, orderinfo i 
+		where i.orderid = d.orderid and d.orderid = #{orderid}
+	</select>
 	
-	</insert>
+	<!-- 주문 내역 -->
+	<select id="orderinfo" resultType="orderinfovo">
+		select i.orderid, i.userid, i.orderdate, i.receiptaddr, i.carid, i.totalprice
+		from orderinfo i
+		where i.userid = #{userid}
+	</select>
 </mapper>
 
-<!-- UserId : String TotalPrice : Int CarId : String ReceiptAddr : String 
-	ReceiptLati : String ReceiptLong : String prodList<> : List ProdId : String 
-	ProdNm : String ProdPrice : Int ProdCnt : Int private String orderid; private 
-	String userid; private String orderdate; private String receiptkey; private 
-	String rceiptflag; private String rceiptaddr; private int receiptlati; private 
-	int receiptlong; private String carid; private int totalprice; -->
+<!-- 
+OrderId
+UserId
+OrderDate
+ReceiptAddr
+CarId
+TotalPrice
+
+
+OrderId
+PayCode
+PayDate
+PayPrice
+UserId
+
+
+ProdId
+ProdNm
+ProdPrice
+OrderCnt
+OrderPayInfo
+OrderDetail
+-->

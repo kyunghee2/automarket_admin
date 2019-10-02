@@ -2,8 +2,6 @@ package spring.biz.orderinfo.vo;
 
 import java.util.List;
 
-import spring.biz.product.vo.ProductVO;
-
 public class OrderinfoVO {
 	private String orderid;
 	private String userid;
@@ -15,15 +13,15 @@ public class OrderinfoVO {
 	private int receiptlong;
 	private String carid;
 	private int totalprice;
-	private List<ProductVO> prodlist;
+	private List<OrderdetailVO> orderdetail;
 	
 	public OrderinfoVO() {
 		super();
 	}
-	
+
 	public OrderinfoVO(String orderid, String userid, String orderdate, String receiptkey, String receiptflag,
 			String receiptaddr, int receiptlati, int receiptlong, String carid, int totalprice,
-			List<ProductVO> prodlist) {
+			List<OrderdetailVO> orderdetail) {
 		super();
 		this.orderid = orderid;
 		this.userid = userid;
@@ -35,15 +33,7 @@ public class OrderinfoVO {
 		this.receiptlong = receiptlong;
 		this.carid = carid;
 		this.totalprice = totalprice;
-		this.prodlist = prodlist;
-	}
-
-	public List<ProductVO> getProdlist() {
-		return prodlist;
-	}
-
-	public void setProdlist(List<ProductVO> prodlist) {
-		this.prodlist = prodlist;
+		this.orderdetail = orderdetail;
 	}
 
 	public String getOrderid() {
@@ -126,12 +116,21 @@ public class OrderinfoVO {
 		this.totalprice = totalprice;
 	}
 
+	public List<OrderdetailVO> getOrderdetail() {
+		return orderdetail;
+	}
+
+	public void setOrderdetail(List<OrderdetailVO> orderdetail) {
+		this.orderdetail = orderdetail;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderinfoVO [orderid=" + orderid + ", userid=" + userid + ", orderdate=" + orderdate + ", receiptkey="
 				+ receiptkey + ", receiptflag=" + receiptflag + ", receiptaddr=" + receiptaddr + ", receiptlati="
 				+ receiptlati + ", receiptlong=" + receiptlong + ", carid=" + carid + ", totalprice=" + totalprice
-				+ ", prodlist=" + prodlist + "]";
+				+ ", orderdetail=" + orderdetail + "]";
 	}
+	
 	
 }

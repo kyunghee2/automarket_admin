@@ -32,8 +32,5 @@ public class ProductDAO_MyBatis implements ProductDAO {
 		return sqlSession.selectList("productMapper.alllistprod");
 	}
 
-	public ProductVO orderProd(String prod) {
-		return sqlSession.selectOne("productMapper.orderprod", prod);
-	}
 
 }

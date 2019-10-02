@@ -1,5 +1,7 @@
 package spring.biz.orderinfo.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import spring.biz.orderinfo.dao.OrderinfoDAO;
+import spring.biz.orderinfo.vo.OrderdetailVO;
 import spring.biz.orderinfo.vo.OrderinfoVO;
 
 @Service("orderinfoservice")
@@ -37,4 +40,14 @@ public class OrderinfoServiceImpl implements OrderinfoService {
 	public int addOrder(OrderinfoVO order) {
 		return dao.addOrder(order);
 	}
+	
+	public List<OrderdetailVO> detailOrder(String orderid) {
+		return dao.detailOrder(orderid);
+	}
+
+	public  OrderinfoVO orderinfo(String userid) {
+		return dao.orderinfo(userid);
+	}
+	
+	
 }
