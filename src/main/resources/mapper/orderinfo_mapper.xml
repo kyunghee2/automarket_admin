@@ -16,12 +16,12 @@
 	
 	<!-- 주문 상세 -->
 	<select id="detailorder" resultType="orderdetailvo">
-		select orderid, prodid, prodnm, prodprice, ordercnt 
-		from orderdetail
+		select prodid, prodnm, prodprice, ordercnt 
+		from orderdetail 
 		where orderid = #{orderid}
 	</select>
 	
-	<!-- 주문 내역 -->
+	<!-- 주문내역 -->
 	<select id="orderinfo" resultType="orderinfovo">
 		select orderid, userid, orderdate, receiptaddr, carid, totalprice
 		from orderinfo
