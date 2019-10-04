@@ -1,7 +1,6 @@
 package web.controller;
 
 import java.io.File;
-import java.net.InetAddress;
 import java.util.List;
 import java.util.UUID;
 
@@ -102,13 +101,10 @@ public class ProductController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		InetAddress local = InetAddress.getLocalHost();
-		 
-        System.out.println("My PC IP :" + local.getHostAddress());
-        
+		
         //System.out.println("post : " + local.get);
-		System.out.println("http://"+local.getHostAddress()+":8080/automarket" +detailpath + fileName);
-		prod.setImgpath("http://"+local.getHostAddress()+":8080/automarket"+detailpath+fileName);
+		System.out.println(detailpath + fileName);
+		prod.setImgpath(detailpath+fileName);
 
 		System.out.println("상품 추가 : " + prod);
 		service.addProd(prod);
