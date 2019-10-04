@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cashMapper">
+
+	<select id="cashlist" resultType="cashvo">
+		select c.userid, c.chargedate, c.chargeprice, c.balance 
+		from cashcharge c, userinfo u 
+		where c.userid = u.userid
+		and c.userid = #{userid}
+	</select>
+	
+</mapper>
