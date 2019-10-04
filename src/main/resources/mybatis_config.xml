@@ -8,6 +8,7 @@
 		<typeAlias type="spring.biz.product.vo.ProductVO" alias="prodvo" />
 		<typeAlias type="spring.biz.category.vo.CategoryVO" alias="catevo" />		
 		<typeAlias type="spring.biz.orderinfo.vo.OrderinfoVO" alias="orderinfovo" />		
+		<typeAlias type="spring.biz.orderinfo.vo.OrderdetailVO" alias="orderdetailvo" />		
 	</typeAliases>
 
 	<mappers>

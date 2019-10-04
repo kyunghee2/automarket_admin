@@ -15,7 +15,7 @@
 	</insert>
 	
 	<!-- 주문 상세 -->
-	<select id="detailorder" resultType="orderinfovo">
+	<select id="detailorder" resultType="orderdetailvo">
 		select orderid, prodid, prodnm, prodprice, ordercnt 
 		from orderdetail
 		where orderid = #{orderid}
