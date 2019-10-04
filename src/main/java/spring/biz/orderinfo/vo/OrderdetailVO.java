@@ -6,19 +6,22 @@ public class OrderdetailVO {
 	private String prodnm;
 	private int prodprice;
 	private int ordercnt;
+	private String imgpath;
 	
 	public OrderdetailVO() {
 		super();
 	}
 
-	public OrderdetailVO(String orderid, String prodid, String prodnm, int prodprice, int ordercnt) {
+	public OrderdetailVO(String orderid, String prodid, String prodnm, int prodprice, int ordercnt, String imgpath) {
 		super();
 		this.orderid = orderid;
 		this.prodid = prodid;
 		this.prodnm = prodnm;
 		this.prodprice = prodprice;
 		this.ordercnt = ordercnt;
+		this.imgpath = imgpath;
 	}
+
 
 	public String getOrderid() {
 		return orderid;
@@ -60,10 +63,20 @@ public class OrderdetailVO {
 		this.ordercnt = ordercnt;
 	}
 
+	public String getImgpath() {
+		return imgpath;
+	}
+
+	public void setImgpath(String imgpath) {
+		this.imgpath = imgpath;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderdetailVO [orderid=" + orderid + ", prodid=" + prodid + ", prodnm=" + prodnm + ", prodprice="
-				+ prodprice + ", ordercnt=" + ordercnt + "]";
-	}	
+				+ prodprice + ", ordercnt=" + ordercnt + ", imgpath=" + imgpath + "]";
+	}
+
+	
 	
 }

@@ -26,9 +26,9 @@
 	
 	<!-- 주문 상세 -->
 	<select id="detailorder" resultType="orderdetailvo">
-		select orderid, prodid, prodnm, prodprice, ordercnt 
-		from orderdetail 
-		where orderid = #{orderid}
+		select d.orderid, p.prodid, p.prodnm, p.prodprice, d.ordercnt, nvl(p.imgpath, '') imgpath 
+		from orderdetail d, product p
+		where d.prodid = p.prodid and d.orderid = #{orderid}
 	</select>
 	
 	<!-- 주문내역 -->

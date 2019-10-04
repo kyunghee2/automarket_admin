@@ -29,7 +29,7 @@
 
 	<insert id="adduser" parameterType="uservo">
 		insert into userinfo (userid, email, pwd, regdate, name, deviceid)
-		select USERINFO_SEQ.NEXTVAL, #{email}, #{pwd}, sysdate, #{name}, nvl(#{deviceid} , ' ')
+		select USERINFO_SEQ.NEXTVAL, #{email}, #{pwd}, sysdate, #{name}, nvl(#{deviceid} , ' ') deviceid
 		FROM DUAL
 	</insert>
 
