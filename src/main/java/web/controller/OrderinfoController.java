@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import spring.biz.orderinfo.service.OrderinfoService;
 import spring.biz.orderinfo.vo.OrderdetailVO;
 import spring.biz.orderinfo.vo.OrderinfoVO;
-import spring.biz.orderinfo.vo.OrderpayinfoVO;
 import spring.biz.product.service.ProductService;
+import spring.biz.user.vo.UserVO;
 
 @Controller
 public class OrderinfoController {
@@ -41,15 +41,25 @@ public class OrderinfoController {
 	// ** 주문 상세 api **
 	@RequestMapping(value = "/api/order/detail.do", method = RequestMethod.GET)
 	@ResponseBody
-	public OrderinfoVO getOrder(HttpServletRequest request) {
+	public Map<String, Object> getOrder(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		OrderinfoVO orderinfo = new OrderinfoVO();
 		String orderid = request.getParameter("oid");
 		String userid = request.getParameter("uid");
-		List<OrderdetailVO> list = service.detailOrder(orderid);
 		orderinfo = service.orderinfo(userid);
+		List<OrderdetailVO> list = service.detailOrder(orderid);
 		orderinfo.setOrderdetail(list);
-		System.out.println(orderinfo.getOrderdetail());
-		return orderinfo;
+
+		map.put("orderid", orderinfo.getOrderid());
+		map.put("userid", orderinfo.getUserid());
+		map.put("orderdate", orderinfo.getOrderdate());
+		map.put("receiptaddr", orderinfo.getReceiptaddr());
+		map.put("carid", orderinfo.getCarid());
+		map.put("totalprice", orderinfo.getTotalprice());
+		map.put("orderdetail", orderinfo.getOrderdetail());
+		
+		System.out.println("orderinfo : "+orderinfo);
+		return map;
 	}
 
 //	// ** 주문 내역 api **
