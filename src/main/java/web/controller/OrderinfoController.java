@@ -1,9 +1,9 @@
 package web.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +19,6 @@ import spring.biz.orderinfo.service.OrderinfoService;
 import spring.biz.orderinfo.vo.OrderdetailVO;
 import spring.biz.orderinfo.vo.OrderinfoVO;
 import spring.biz.product.service.ProductService;
-import spring.biz.user.vo.UserVO;
 
 @Controller
 public class OrderinfoController {
@@ -28,12 +27,58 @@ public class OrderinfoController {
 	@Autowired
 	ProductService pservice;
 
+//	Map<String, Object> map = new HashMap<String, Object>();
+//	System.out.println("user vo : " + vo);
+//	//System.out.println(request.getParameter("pwd"));
+//	try {
+//		AES256Util aes256 = new AES256Util(key);
+//		String acs_pwd = aes256.aesEncode(vo.getPwd());
+//		vo.setPwd(acs_pwd);
+//		int result = service.addUser(vo);
+//		System.out.println("user vo after : " + vo);
+//		map.put("status", 1);
+//		map.put("msg", "" );
+//		System.out.println("register result : " + result);
+//	} catch (Exception e) {
+//		map.put("status", 0);
+//		map.put("msg", e.getMessage() );
+//		System.out.println("register result : " + e.getStackTrace());
+//	}
+//	return map;
+
+	
 	// ** 주문하기 api **
 	@RequestMapping(value = "/api/order.do", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> addorder(@RequestBody OrderinfoVO vo, BindingResult errors) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("order vo : " + vo);
+		
+		try {
+			// key값
+			Random randomkey =new Random();
+			StringBuffer buf =new StringBuffer();
+			for(int i = 0; i < 12; i++){
+			    //rnd.nextBoolean() 는 랜덤으로 true, false 를 리턴. 
+				//true일 시 랜덤 한 소문자를, 
+				//false 일 시 랜덤 한 숫자를 StringBuffer 에 append
+			    if(randomkey.nextBoolean()){
+			        buf.append((char)((int)(randomkey.nextInt(26))+97));
+			    }else{
+			        buf.append((randomkey.nextInt(10)));
+			    }
+			}
+			//System.out.println(buf);
+			vo.setReceiptkey(buf.toString());
+			System.out.println("order vo : " + vo);
+			
+			
+			map.put("receiptkey", vo.getReceiptkey());
+			map.put("orderid", vo.getOrderid());
+			
+		} catch (Exception e) {
+
+			System.out.println("error : "+e.getMessage());
+		}
 
 		return map;
 	}
@@ -48,6 +93,7 @@ public class OrderinfoController {
 		String userid = request.getParameter("uid");
 		orderinfo = service.orderinfo(userid);
 		List<OrderdetailVO> list = service.detailOrder(orderid);
+		System.out.println(orderid);
 		orderinfo.setOrderdetail(list);
 
 		map.put("orderid", orderinfo.getOrderid());
@@ -62,46 +108,6 @@ public class OrderinfoController {
 		return map;
 	}
 
-//	// ** 주문 내역 api **
-//	@RequestMapping(value = "/api/order/history.do", method = RequestMethod.GET)
-//	@ResponseBody
-//	public Map<String, Object> getOrderHistory(HttpServletRequest request) {
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		String id = request.getParameter("uid");
-//		OrderpayinfoVO orderpayinfo = service.historyOrder(id);
-//		map.put("orderid", orderpayinfo.getOrderid());
-//		map.put("userid", orderpayinfo.getUserid());
-//		map.put("orderdate", orderpayinfo.getPaydate());
-//		map.put("receiptaddr", )
-//		
-//		return service.historyOrder(id);
-//	}
 
-//	"orderid": "1000003",
-//	"userid": "1000007",
-//	"orderdate": "2019-10-02 15:38:29",
-//	"receiptkey": null,
-//	"receiptflag": null,
-//	"receiptaddr": "multicampus",
-//	"receiptlati": 0,
-//	"receiptlong": 0,
-//	"carid": "1",
-//	"totalprice": 10000,
-//	"prodlist": null	
-	
-	// login api
-//	@RequestMapping(value = "/api/login.do", method = RequestMethod.GET)
-//	@ResponseBody
-//	public Map<String, Object> getlogin(HttpServletRequest request) {
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		String email = request.getParameter("email");
-//		UserVO user = service.getLogin(email);
-//		map.put("userid", user.getUserid());
-//		map.put("email", user.getEmail());
-//		map.put("cashamt", user.getCashamt());
-//		map.put("adminflag", user.getAdminflag());
-//		map.put("name", user.getName());
-//		return map;
-//	}
 
 }

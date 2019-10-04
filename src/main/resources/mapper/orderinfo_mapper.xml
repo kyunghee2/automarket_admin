@@ -4,19 +4,29 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="orderinfoMapper">
 	<!-- 주문하기 -->
-	<insert id="addorder" parameterType="orderinfovo">
+	<select id="addorder" parameterType="orderinfovo">
 		insert into orderinfo
-		(orderid, userid, orderdate, totalprice, carid, receiptaddr,
+		(orderid, userid, orderdate, totalprice, carid, receiptkey, receiptaddr,
 		receiptlati, receiptlong)
 		select ORDER_SEQ.NEXTVAL,
-		#{userid}, sysdate, #{totalprice}, #{carid}, #{receiptaddr},
-		#{receiptlati}, #{receiptlong}
+		#{userid}, sysdate, #{totalprice}, #{carid}, #{receiptkey}, #{receiptaddr},
+		#{receiptlati}, #{receiptlong}}
 		FROM DUAL
+	</select>
+	
+	<!-- 주문 상품 -->
+	<insert id="addorderprod" parameterType="orderdetailvo" >
+		insert into orderdetail
+		(orderid, prodid, prodnm, prodprice, ordercnt)
+		select #{orderid}, #{prodid}, #{prodnm}, #{prodprice}, #{ordercnt}
+		from orderdetail d, orderinfo i
+		where d.orderid = i.orderid
+	
 	</insert>
 	
 	<!-- 주문 상세 -->
 	<select id="detailorder" resultType="orderdetailvo">
-		select prodid, prodnm, prodprice, ordercnt 
+		select orderid, prodid, prodnm, prodprice, ordercnt 
 		from orderdetail 
 		where orderid = #{orderid}
 	</select>
@@ -29,26 +39,3 @@
 	</select>
 </mapper>
 
-<!-- 
-OrderId
-UserId
-OrderDate
-ReceiptAddr
-CarId
-TotalPrice
-
-
-OrderId
-PayCode
-PayDate
-PayPrice
-UserId
-
-
-ProdId
-ProdNm
-ProdPrice
-OrderCnt
-OrderPayInfo
-OrderDetail
--->
