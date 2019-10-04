@@ -16,16 +16,16 @@
 	
 	<!-- 주문 상세 -->
 	<select id="detailorder" resultType="orderinfovo">
-		select d.prodid, d.prodnm, d.prodprice, d.ordercnt 
-		from orderdetail d, orderinfo i 
-		where i.orderid = d.orderid and d.orderid = #{orderid}
+		select orderid, prodid, prodnm, prodprice, ordercnt 
+		from orderdetail
+		where orderid = #{orderid}
 	</select>
 	
 	<!-- 주문 내역 -->
 	<select id="orderinfo" resultType="orderinfovo">
-		select i.orderid, i.userid, i.orderdate, i.receiptaddr, i.carid, i.totalprice
-		from orderinfo i
-		where i.userid = #{userid}
+		select orderid, userid, orderdate, receiptaddr, carid, totalprice
+		from orderinfo
+		where userid = #{userid}
 	</select>
 </mapper>
 

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import spring.biz.orderinfo.service.OrderinfoService;
 import spring.biz.orderinfo.vo.OrderdetailVO;
 import spring.biz.orderinfo.vo.OrderinfoVO;
-import spring.biz.orderinfo.vo.OrderpayinfoVO;
 import spring.biz.product.service.ProductService;
 
 @Controller
@@ -45,10 +44,11 @@ public class OrderinfoController {
 		OrderinfoVO orderinfo = new OrderinfoVO();
 		String orderid = request.getParameter("oid");
 		String userid = request.getParameter("uid");
-		List<OrderdetailVO> list = service.detailOrder(orderid);
 		orderinfo = service.orderinfo(userid);
+		List<OrderdetailVO> list = service.detailOrder(orderid);
+		
 		orderinfo.setOrderdetail(list);
-		System.out.println(orderinfo.getOrderdetail());
+		System.out.println("orderinfo : "+orderinfo);
 		return orderinfo;
 	}
 
