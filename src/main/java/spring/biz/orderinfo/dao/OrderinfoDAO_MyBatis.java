@@ -1,5 +1,6 @@
 package spring.biz.orderinfo.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -19,7 +20,7 @@ public class OrderinfoDAO_MyBatis implements OrderinfoDAO {
 	}
 
 	public int addOrder(OrderinfoVO order) {
-		return sqlSession.selectOne("orderinfoMapper.addorder",order);
+		return sqlSession.insert("orderinfoMapper.addorder",order);
 	}
 	
 	public List<OrderdetailVO> detailOrder(String orderid) {
