@@ -78,7 +78,7 @@ public class OrderinfoController {
 			
 		} catch (Exception e) {
 
-			System.out.println("error : "+e.getMessage());
+			System.out.println(e.getMessage());
 		}
 
 		return map;
