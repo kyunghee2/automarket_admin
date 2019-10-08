@@ -12,15 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import spring.biz.cash.service.CashService;
 import spring.biz.cash.vo.CashVO;
-import spring.biz.user.service.UserService;
 
 @Controller
 public class CashController {
 	
 	@Autowired
 	CashService service;
-	@Autowired
-	UserService uservice;
 		
 	// ** 유저 캐쉬충전 리스트 보기 **
 	@RequestMapping(value = "/api/cash/history.do", method = RequestMethod.GET)
