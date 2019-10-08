@@ -5,13 +5,14 @@
 <mapper namespace="orderinfoMapper">
 	<!-- 주문하기 -->
 	<select id="addorder" parameterType="orderinfovo">
-		insert into orderinfo
-		(orderid, userid, orderdate, totalprice, carid, receiptkey, receiptaddr,
-		receiptlati, receiptlong)
-		select ORDER_SEQ.NEXTVAL,
-		#{userid}, sysdate, #{totalprice}, #{carid}, #{receiptkey}, #{receiptaddr},
-		#{receiptlati}, #{receiptlong}}
+		insert into ORDERINFO
+		(ORDERID, USERID, ORDERDATE, RECEIPTKEY, RECEIPTADDR, RECEIPTLATI,
+		RECEIPTLONG, CARID, TOTALPRICE)
+		select ORDER_SEQ.NEXTVAL, #{userid}, sysdate, #{receiptkey}, #{receiptaddr}, 
+		#{receiptlati}, #{receiptlong}, #{carid}, #{totalprice}
 		FROM DUAL
+		
+		select ORDER_SEQ.CURRVAL FROM DUAL
 	</select>
 	
 	<!-- 주문 상품 -->

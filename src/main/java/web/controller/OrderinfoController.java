@@ -71,6 +71,7 @@ public class OrderinfoController {
 			vo.setReceiptkey(buf.toString());
 			System.out.println("order vo : " + vo);
 			
+			service.addOrder(vo);
 			
 			map.put("receiptkey", vo.getReceiptkey());
 			map.put("orderid", vo.getOrderid());
