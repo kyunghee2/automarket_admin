@@ -19,6 +19,7 @@ import spring.biz.orderinfo.service.OrderinfoService;
 import spring.biz.orderinfo.vo.OrderdetailVO;
 import spring.biz.orderinfo.vo.OrderinfoVO;
 import spring.biz.product.service.ProductService;
+import spring.biz.product.vo.ProductVO;
 
 @Controller
 public class OrderinfoController {
@@ -26,26 +27,6 @@ public class OrderinfoController {
 	OrderinfoService service;
 	@Autowired
 	ProductService pservice;
-
-//	Map<String, Object> map = new HashMap<String, Object>();
-//	System.out.println("user vo : " + vo);
-//	//System.out.println(request.getParameter("pwd"));
-//	try {
-//		AES256Util aes256 = new AES256Util(key);
-//		String acs_pwd = aes256.aesEncode(vo.getPwd());
-//		vo.setPwd(acs_pwd);
-//		int result = service.addUser(vo);
-//		System.out.println("user vo after : " + vo);
-//		map.put("status", 1);
-//		map.put("msg", "" );
-//		System.out.println("register result : " + result);
-//	} catch (Exception e) {
-//		map.put("status", 0);
-//		map.put("msg", e.getMessage() );
-//		System.out.println("register result : " + e.getStackTrace());
-//	}
-//	return map;
-
 	
 	// ** 주문하기 api **
 	@RequestMapping(value = "/api/order.do", method = RequestMethod.POST)
@@ -76,12 +57,26 @@ public class OrderinfoController {
 			map.put("receiptkey", vo.getReceiptkey());
 			map.put("orderid", vo.getOrderid());
 			
+			//주문 상세
+			System.out.println("주문 개수 : "+vo.getOrderdetail().size());
+			for(int i = 0; i < vo.getOrderdetail().size(); i++) {
+				OrderdetailVO orderdetail = vo.getOrderdetail().get(i);
+				System.out.println("주문 상품 상세 " + orderdetail);
+				orderdetail.setOrderid(vo.getOrderid());
+				service.adddetailOrder(orderdetail);
+			}	
 		} catch (Exception e) {
-
 			System.out.println(e.getMessage());
 		}
-
 		return map;
+	}
+	
+	// ** 주문 내역 api **
+	@RequestMapping(value = "/api/order/info.do", method = RequestMethod.GET)
+	@ResponseBody
+	public List<OrderinfoVO> getInfo(HttpServletRequest request) {
+		String userid = request.getParameter("uid");
+		return service.orderinfolist(userid);
 	}
 
 	// ** 주문 상세 api **
@@ -91,8 +86,8 @@ public class OrderinfoController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		OrderinfoVO orderinfo = new OrderinfoVO();
 		String orderid = request.getParameter("oid");
-		String userid = request.getParameter("uid");
-		orderinfo = service.orderinfo(userid);
+		String receiptkey = request.getParameter("rkey"); //receiptkey로 변경
+		orderinfo = service.orderinfo(receiptkey);
 		List<OrderdetailVO> list = service.detailOrder(orderid);
 		System.out.println(orderid);
 		orderinfo.setOrderdetail(list);

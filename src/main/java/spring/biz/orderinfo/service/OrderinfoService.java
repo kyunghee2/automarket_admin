@@ -9,8 +9,12 @@ import spring.biz.orderinfo.vo.OrderinfoVO;
 public interface OrderinfoService {
 
 	int addOrder(OrderinfoVO order);
+	
+	int adddetailOrder(OrderdetailVO order);
 		
 	List<OrderdetailVO> detailOrder(String orderid);
 	
-	 OrderinfoVO orderinfo(String userid);
+	 OrderinfoVO orderinfo(String receiptkey);
+	 
+	 List<OrderinfoVO> orderinfolist(String userid);
 }
