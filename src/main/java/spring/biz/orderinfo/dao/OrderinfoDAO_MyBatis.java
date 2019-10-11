@@ -31,11 +31,19 @@ public class OrderinfoDAO_MyBatis implements OrderinfoDAO {
 		return sqlSession.selectList("orderinfoMapper.detailorder",orderid);
 	}
 	
-	public OrderinfoVO orderinfo(String receiptkey) {
-		return sqlSession.selectOne("orderinfoMapper.orderinfo",receiptkey);
-	}
+//	public OrderinfoVO orderinfo(String receiptkey) {
+//		return sqlSession.selectOne("orderinfoMapper.orderinfo",receiptkey);
+//	}
 	
 	public List<OrderinfoVO> orderinfolist(String userid) {
 		return sqlSession.selectList("orderinfoMapper.orderinfolist",userid);
+	}
+
+	public OrderinfoVO orderinforkey(String receiptkey) {
+		return sqlSession.selectOne("orderinfoMapper.orderinforkey",receiptkey);
+	}
+
+	public OrderinfoVO orderinfoid(String orderid) {
+		return sqlSession.selectOne("orderinfoMapper.orderinfoid", orderid);
 	}
 }

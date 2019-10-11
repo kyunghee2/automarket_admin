@@ -6,14 +6,18 @@ import spring.biz.orderinfo.vo.OrderdetailVO;
 import spring.biz.orderinfo.vo.OrderinfoVO;
 
 public interface OrderinfoDAO {
-	
+
 	int addOrder(OrderinfoVO order);
-	
-	int adddetailOrder(OrderdetailVO order); 
-	
+
+	int adddetailOrder(OrderdetailVO order);
+
 	List<OrderdetailVO> detailOrder(String orderid);
-	
-	 OrderinfoVO orderinfo(String receiptkey);
-	 
-	 List<OrderinfoVO> orderinfolist(String userid);
+
+	// OrderinfoVO orderinfo(String receiptkey);
+
+	OrderinfoVO orderinforkey(String receiptkey);
+
+	OrderinfoVO orderinfoid(String orderid);
+
+	List<OrderinfoVO> orderinfolist(String userid);
 }

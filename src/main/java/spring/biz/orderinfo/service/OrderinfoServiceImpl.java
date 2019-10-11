@@ -51,12 +51,20 @@ public class OrderinfoServiceImpl implements OrderinfoService {
 		return dao.detailOrder(orderid);
 	}
 
-	public  OrderinfoVO orderinfo(String receiptkey) {
-		return dao.orderinfo(receiptkey);
-	}
+//	public  OrderinfoVO orderinfo(String receiptkey) {
+//		return dao.orderinfo(receiptkey);
+//	}
 	
 	public List<OrderinfoVO> orderinfolist(String userid) {
 		return dao.orderinfolist(userid);
+	}
+
+	public OrderinfoVO orderinforkey(String receiptkey) {
+		return dao.orderinforkey(receiptkey);
+	}
+
+	public OrderinfoVO orderinfoid(String orderid) {
+		return dao.orderinfoid(orderid);
 	}
 
 	
