@@ -17,28 +17,36 @@
 	    </selectKey>
 	</insert>
 	
-	<!-- 주문 상품 -->
-	<insert id="addorderprod" parameterType="orderdetailvo" >
+	<!--주문하기 주문 상품 상세 -->
+	<insert id="detailprod" parameterType="orderdetailvo" >
 		insert into orderdetail
 		(orderid, prodid, prodnm, prodprice, ordercnt)
-		select #{orderid}, #{prodid}, #{prodnm}, #{prodprice}, #{ordercnt}
-		from orderdetail d, orderinfo i
-		where d.orderid = i.orderid
+		select #{orderid}, #{prodid}, p.prodnm, p.prodprice, #{ordercnt}
+		from product p
+		where p.prodid = #{prodid}
 	
 	</insert>
 	
-	<!-- 주문 상세 -->
+	<!-- 개별 주문 상품 상세 -->
 	<select id="detailorder" resultType="orderdetailvo">
 		select d.orderid, p.prodid, p.prodnm, p.prodprice, d.ordercnt, nvl(p.imgpath, '') imgpath 
 		from orderdetail d, product p
 		where d.prodid = p.prodid and d.orderid = #{orderid}
 	</select>
 	
-	<!-- 주문내역 -->
+	<!-- 사용자별 개별 주문내역 -->
 	<select id="orderinfo" resultType="orderinfovo">
+		select receiptkey, orderid, userid, orderdate, receiptaddr, carid, totalprice
+		from orderinfo
+		where receiptkey = #{receiptkey}
+	</select>
+	
+	<!--  사용자별 전체 주문내역 -->
+	<select id="orderinfolist" resultType="orderinfovo">
 		select orderid, userid, orderdate, receiptaddr, carid, totalprice
 		from orderinfo
 		where userid = #{userid}
 	</select>
+
 </mapper>
 
