@@ -14,10 +14,9 @@
 	</insert>
 
 	<select id="cashlist" resultType="cashvo">
-		select c.userid, c.chargedate, c.chargeprice, c.balance 
-		from cashcharge c, userinfo u 
-		where c.userid = u.userid
-		and c.userid = #{userid}
+		select userid, chargedate, chargeprice, balance 
+		from cashcharge 
+		where userid = #{userid}
 	</select>
 	
 </mapper>

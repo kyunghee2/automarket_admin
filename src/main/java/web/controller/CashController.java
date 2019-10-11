@@ -21,6 +21,7 @@ public class CashController {
 	
 	@Autowired
 	CashService service;
+
 	@Autowired
 	UserService uservice;
 	
@@ -39,19 +40,6 @@ public class CashController {
 		return service.addCash(chargeprice,balance);
 	}
 	
-//	@ResponseBody
-//	public Map<String, Object> addcash(@RequestBody CashVO vo, BindingResult errors) {
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		
-//		System.out.println("order vo : " + vo);
-//		
-//		service.addCash(vo);
-//			
-//		map.get("userid");
-//		map.get("");
-//			
-//		return map;
-//	}
 		
 	// ** 유저 캐쉬충전 리스트 보기 **
 	@RequestMapping(value = "/api/cash/history.do", method = RequestMethod.GET)
