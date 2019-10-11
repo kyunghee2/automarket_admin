@@ -4,15 +4,30 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cashMapper">
 
+	<!-- 잔액값 가져오기 -->
+	<update id="updatecashamt" parameterType="cashvo">
+		update userinfo 
+		set cashamt = cashamt + #{chargeprice}
+		where userid = #{userid}
+	</update>
+
 	<!-- 충전하기 -->
 	<insert id="addcash" parameterType="cashvo">
-		insert into cashcharge
-		(userid, chargedate, chargeprice)
-		select CASHCHARGE_SEQ.NEXTVAL AS userid, #{chargeprice}
-		FROM DUAL
 		
+		insert into cashcharge
+		(seq, userid, chargeprice, balance)
+		select CASHCHARGE_SEQ.NEXTVAL AS seq, #{userid}, #{chargeprice}, cashamt
+		from userinfo where userid = #{userid}
 	</insert>
-
+	
+	<!-- 잔액 리턴 -->
+	<select id="getbalance" resultType="uservo">
+		select userid, cashamt, name
+		from userinfo
+		where userid = #{userid}
+	</select>
+	
+	<!-- 충전 히스토리 -->
 	<select id="cashlist" resultType="cashvo">
 		select userid, chargedate, chargeprice, balance 
 		from cashcharge 

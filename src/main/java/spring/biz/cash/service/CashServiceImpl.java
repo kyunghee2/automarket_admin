@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import spring.biz.cash.dao.CashDAO;
 import spring.biz.cash.vo.CashVO;
+import spring.biz.user.vo.UserVO;
 
 @Service("cashservice")
 public class CashServiceImpl implements CashService{
@@ -38,14 +39,25 @@ public class CashServiceImpl implements CashService{
 	}
 
 	@Override
+	public int updateCashamt(String userid, int chargeprice) {
+		// TODO Auto-generated method stub
+		return dao.updateCashamt(userid, chargeprice);
+	}
+	
+	@Override
 	public List<CashVO> getCashList(String userid) {
 		// TODO Auto-generated method stub
 		return dao.getCashList(userid);
 	}
 
-	public int addCash(int chargeprice, int balance) {
-		return dao.addCash(chargeprice, balance);
+	public int addCash(CashVO vo) {
+		return dao.addCash(vo);
 	}
 
+	@Override
+	public UserVO getbalance(String userid) {
+		// TODO Auto-generated method stub
+		return dao.getbalance(userid);
+	}
 
 }
