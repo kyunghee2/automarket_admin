@@ -15,10 +15,14 @@ public class CashDAO_MyBatis implements CashDAO{
 	@Inject
 	SqlSession sqlSession=null;
 
-//	@Override
-//	public List<CategoryVO> getCategoryList() {
-//		return sqlSession.selectList("categoryMapper.categorylist");
-//	}
+	public CashDAO_MyBatis() {
+		
+	}
+
+	@Override
+	public int addCash(int chargeprice, int balance) {
+		return sqlSession.selectOne("cashMapper.addcash",chargeprice);
+	}
 
 	@Override
 	public List<CashVO> getCashList(String userid) {

@@ -4,6 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cashMapper">
 
+	<!-- 충전하기 -->
+	<insert id="addcash" parameterType="cashvo">
+		insert into cashcharge
+		(userid, chargedate, chargeprice)
+		select CASHCHARGE_SEQ.NEXTVAL AS userid, #{chargeprice}
+		FROM DUAL
+		
+	</insert>
+
 	<select id="cashlist" resultType="cashvo">
 		select c.userid, c.chargedate, c.chargeprice, c.balance 
 		from cashcharge c, userinfo u 
