@@ -52,6 +52,20 @@
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">▷ 차량 위치</h1>
+						
+						<div id="map" style="width:500px;height:400px;"></div>
+							<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aa2101ad56965d7f968552f0fe53a908"></script>
+							<script>
+								var container = document.getElementById('map');
+								var options = {
+									center: new kakao.maps.LatLng(33.450701, 126.570667),
+									level: 3
+								};
+						
+								var map = new kakao.maps.Map(container, options);
+							</script>
+
+						
 					</div>
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">

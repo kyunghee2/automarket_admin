@@ -9,6 +9,7 @@
 		<typeAlias type="spring.biz.category.vo.CategoryVO" alias="catevo" />		
 		<typeAlias type="spring.biz.orderinfo.vo.OrderinfoVO" alias="orderinfovo" />		
 		<typeAlias type="spring.biz.cash.vo.CashVO" alias="cashvo" />		
+		<typeAlias type="spring.biz.car.vo.CarVO" alias="carvo" />		
 		<typeAlias type="spring.biz.orderinfo.vo.OrderdetailVO" alias="orderdetailvo" />		
 	</typeAliases>
 
@@ -18,5 +19,6 @@
 		<mapper resource="mapper/category_mapper.xml" />
 		<mapper resource="mapper/orderinfo_mapper.xml" />
 		<mapper resource="mapper/cash_mapper.xml" />
+		<mapper resource="mapper/car_mapper.xml" />
 	</mappers>
 </configuration>
