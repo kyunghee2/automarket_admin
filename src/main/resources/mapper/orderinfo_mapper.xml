@@ -34,11 +34,18 @@
 		where d.prodid = p.prodid and d.orderid = #{orderid}
 	</select>
 	
-	<!-- 사용자별 개별 주문내역 -->
-	<select id="orderinfo" resultType="orderinfovo">
+	<!-- 사용자별 개별 주문내역 rkey -->
+	<select id="orderinforkey" resultType="orderinfovo">
 		select receiptkey, orderid, userid, orderdate, receiptaddr, carid, totalprice
 		from orderinfo
 		where receiptkey = #{receiptkey}
+	</select>
+	
+	<!-- 사용자별 개별 주문내역 id-->
+	<select id="orderinfoid" resultType="orderinfovo">
+		select receiptkey, orderid, userid, orderdate, receiptaddr, carid, totalprice
+		from orderinfo
+		where orderid = #{orderid}
 	</select>
 	
 	<!--  사용자별 전체 주문내역 -->
