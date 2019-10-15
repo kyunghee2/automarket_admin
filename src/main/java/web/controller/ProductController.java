@@ -1,7 +1,9 @@
 package web.controller;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,13 +47,26 @@ public class ProductController {
 	
 	// ** 상품 전체 리스트 보기
 	@RequestMapping("/prod/alllist.do")
-	public ModelAndView getUserList() {
+	public ModelAndView getProdList(@RequestParam(defaultValue = "prodnm") String searchOption,
+			@RequestParam(defaultValue = "") String keyword) throws Exception {
+		List<ProductVO> list = service.getProdList(searchOption, keyword); // 레코드 갯수
+		int count = service.countArticle(searchOption, keyword);
+		
+		
+		
 		ModelAndView view = new ModelAndView();
-		view.addObject("catelist", cservice.getCategoryList());
-		view.addObject("prodlist", service.getProdList());
-		for(int i = 0; i < service.getProdList().size(); i++) {
-			System.out.println(service.getProdList().get(i));
-		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("count", count);
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		
+		//view.addObject("catelist", cservice.getCategoryList());
+		view.addObject("map", map);
+//		for(int i = 0; i < service.getProdList().size(); i++) {
+//			System.out.println(service.getProdList().get(i));
+//		}
 		view.setViewName("prod/prod_alllist");
 		return view;
 	}

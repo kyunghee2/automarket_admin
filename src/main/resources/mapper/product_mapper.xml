@@ -25,11 +25,36 @@
 
 	<!-- 상품 전체 리스트 보기 -->
 	<select id="alllistprod" resultType="prodvo">
-		select p.prodid, p.prodnm, p.prodcnt, p.cateid, p.prodprice, p.costprice, p.discount,
+		select p.prodid, p.prodnm, p.prodcnt, p.cateid, p.prodprice,
+		p.costprice, p.discount,
 		p.expirydate, p.imgpath
-		from product p , category c
-		where p.cateid = c.cateid
+		from product p ,
+		category c
+		<include refid="search"></include>
 	</select>
+
+	<select id="countArticle" resultType="int">
+		select COUNT(*) from product p, category c
+		<include refid="search"></include>
+	</select>
+
+	<!-- sql code 조각 -->
+	<!-- 반복되는 sql의 일부를 sql태그를 이용하여 따로 빼둘 수 있음 -->
+	<sql id="search">
+		<choose>
+			<!-- 검색 옵션이 전체 검색일 경우 -->
+			<when test="searchOption == 'prodnm'">
+				where p.cateid = c.cateid and
+				p.prodnm like
+				'%'||#{keyword}||'%'
+			</when>
+			<!-- 전체 검색이 아닐 경우 -->
+			<otherwise>
+				where p.cateid = c.cateid and
+				c.catenm like '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
 
 
 	<!-- 카테고리별 상품 리스트 보기 -->
@@ -41,6 +66,6 @@
 		from product p, category c
 		where p.cateid = c.cateid and p.cateid = #{cateid}
 	</select>
-	
+
 </mapper>
 

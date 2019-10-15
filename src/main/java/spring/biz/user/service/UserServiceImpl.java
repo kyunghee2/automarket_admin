@@ -69,9 +69,9 @@ public class UserServiceImpl implements UserService {
 		return dao.getUser(uid);
 	}
 
-	public List<UserVO> getUserList() {
-		return dao.getUserList();
-	}
+//	public List<UserVO> getUserList() {
+//		return dao.getUserList();
+//	}
 
 	public int updateUser(UserVO user) {
 		return dao.updateUser(user);
@@ -82,5 +82,13 @@ public class UserServiceImpl implements UserService {
 	}
 	public UserVO getEmailCheck(String email) {
 		return dao.getUser(email);
+	}
+
+	public List<UserVO> getUserList(String searchOption, String keyword) throws Exception {
+		return dao.getUserList(searchOption, keyword);
+	}
+	
+	public int countArticle(String searchOption, String keyword) throws Exception {
+		return dao.countArticle(searchOption, keyword);
 	}
 }

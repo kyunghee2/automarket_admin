@@ -11,6 +11,8 @@ public interface ProductDAO {
 
 	List<ProductVO> getProdList(String cateid);
 
-	List<ProductVO> getProdList();
+	List<ProductVO> getProdList(String searchOption, String keyword) throws Exception;
+
+	int countArticle(String searchOption, String keyword) throws Exception;
 
 }

@@ -1,6 +1,8 @@
 package spring.biz.product.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,20 @@ public class ProductDAO_MyBatis implements ProductDAO {
 		return sqlSession.selectList("productMapper.listprod", cateid);
 	}
 	
-	public List<ProductVO> getProdList() {
-		return sqlSession.selectList("productMapper.alllistprod");
+	public List<ProductVO> getProdList(String searchOption, String keyword) throws Exception {
+		// 검색 옵션, 키워드 맵에 저장
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		return sqlSession.selectList("productMapper.alllistprod", map);
+	}
+	
+	public int countArticle(String searchOption, String keyword) throws Exception {
+		// 검색 옵션, 키워드 맵에 저장
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		return sqlSession.selectOne("productMapper.countArticle", map);
 	}
 
 

@@ -26,15 +26,6 @@
 <!-- Custom styles for this template-->
 <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
-<!-- 
-<script type="text/javascript">
-	function prodCreate() {
-		f.action = "./prod/add.do";
-		f.method = "post";
-		f.submit();
-	}
-</script>
--->
 </head>
 
 <body id="page-top">
@@ -56,53 +47,73 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<section>
-						<!--
-						<div id="c1">
-							<label>상품 카테고리</label> <select name="cateid" id="cateid">
-								<option id="big" value="default" selected="selected">카테고리</option>
-								<c:forEach var="scateData" items="${catelist}">
-									<option value="${scateData.cateid}">${scateData.catenm}</option>
-									
-								</c:forEach>
-							</select>
+					<!-- DataTales Example -->
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">사용자 정보</h6>
 						</div>
-						-->
-						<table class="tablea">
-							<tr>
-								<th></th>
-								<th>사용자 고유seq</th>
-								<th>이메일</th>
-								<th>잔액</th>
-								<th>관리자 여부</th>
-								<th>가입 일자</th>
-								<th>차량 id</th>
-								<th>이름</th>
-							</tr>
+						<div class="card-body">
+							<div class="table-responsive">
+								${map.count }명의 사용자가 있습니다.
+								<table class="table table-bordered dataTable" id="dataTable"
+									width="100%" cellspacing="0" role="grid"
+									aria-describedby="dataTable_info" style="width: 100%;">
 
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>이메일</th>
+											<th>잔액</th>
+											<th>관리자 여부</th>
+											<th>가입 일자</th>
+											<th>차량 id</th>
+											<th>이름</th>
+										</tr>
+									</thead>
 
+									<!-- 사용자 리스트를 클라이언트에게 보여주기 위하여 출력. -->
+									<tbody>
+										<c:forEach var="udata" items="${map.list}">
+											<tr>
+												<td>${udata.userid}</td>
+												<td>${udata.email}</td>
+												<td>${udata.cashamt}</td>
+												<td>${udata.adminflag}</td>
+												<td>${udata.regdate}</td>
+												<td>${udata.deviceid}</td>
+												<td>${udata.name}</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 
+					<br> <br>
+					<div class="form-group row justify-content-center">
+						<div class="w100" style="padding-right: 10px">
+							<form name="form1" method="post"
+								action="${pageContext.request.contextPath}/user/list.do">
+								<select class="form-control form-control-sm" name="searchOption"
+									id="searchOption">
+									<option value="email"
+										<c:out value="${map.searchOption=='email'?'selected':' '}"/>>이메일</option>
+									<option value="name"
+										<c:out value="${map.searchOption=='name'?'selected':' ' }"/>>사용자명</option>
+								</select> <input name="keyword" value="${map.keyword }"> <input
+									type="submit" value="검색">
+							</form>
+						</div>
+					</div>
 
-							<!-- 사용자 리스트를 클라이언트에게 보여주기 위하여 출력. -->
-							<c:forEach var="udata" items="${users}">
-								<tr>
-									<td>${udata.userid}</td>
-									<td>${udata.useremail}</td>
-									<td>${udata.cashamt}</td>
-									<td>${udata.adminflag}</td>
-									<td>${udata.regdate}</td>
-									<td>${udata.deviceid}</td>
-									<td>${udata.name}</td>
-								</tr>
-							</c:forEach>
-
-						</table>
-
-						<table>
-							<tr>
-								<td><button onclick="location.href='${pageContext.request.contextPath}/index.do'" class="btn btn-primary">Home</button></td>
-							</tr>
-						</table>
+					<table>
+						<tr>
+							<td><button
+									onclick="location.href='${pageContext.request.contextPath}/index.do'"
+									class="btn btn-primary">Home</button></td>
+						</tr>
+					</table>
 
 
 

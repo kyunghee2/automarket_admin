@@ -5,41 +5,73 @@
 <mapper namespace="userMapper">
 	<select id="getEmailCheck" resultType="uservo">
 		select email
-		from userinfo where email = #{email}
+		from userinfo
+		where email = #{email}
 	</select>
-	
+
 	<select id="login" parameterType="spring.biz.user.vo.UserVO"
 		resultType="uservo">
 		select email, cashamt, adminflag, name
 		from userinfo
-		where email = #{email} and pwd = #{pwd}
+		where
+		email = #{email} and pwd = #{pwd}
 	</select>
 
 	<select id="getuser" resultType="uservo">
-		select userid, email, cashamt, adminflag, name
+		select userid, email, cashamt,
+		adminflag, name
 		from userinfo
 		where email = #{email}
 	</select>
-	
+
 	<select id="getLogin" resultType="uservo">
-		select userid, email, cashamt, adminflag, name
+		select userid, email, cashamt,
+		adminflag, name
 		from userinfo
 		where email = #{email}
 	</select>
 
 	<insert id="adduser" parameterType="uservo">
-		insert into userinfo (userid, email, pwd, regdate, name, deviceid)
-		select USERINFO_SEQ.NEXTVAL, #{email}, #{pwd}, sysdate, #{name}, nvl(#{deviceid} , ' ') deviceid
+		insert into userinfo (userid,
+		email, pwd, regdate, name, deviceid)
+		select USERINFO_SEQ.NEXTVAL,
+		#{email}, #{pwd}, sysdate, #{name}, nvl(#{deviceid} , ' ') deviceid
 		FROM DUAL
 	</insert>
 
 	<select id="listuser" resultType="uservo">
 		select userid, email, cashamt, adminflag, regdate, deviceid, name
-		from userinfo order by regdate desc
+		from userinfo
+		<include refid="search"></include>
 	</select>
 
+	<select id="countArticle" resultType="int">
+		select COUNT(*) from userinfo
+		<include refid="search"></include>
+	</select>
+
+	<!-- sql code 조각 -->
+	<!-- 반복되는 sql의 일부를 sql태그를 이용하여 따로 빼둘 수 있음 -->
+	<sql id="search">
+		<choose>
+			<!-- 검색 옵션이 email일 경우 -->
+			<when test="searchOption == 'email'">
+				where email like
+				'%'||#{keyword}||'%'
+				order by regdate desc
+			</when>
+			<!-- email이 아닐 경우 -->
+			<otherwise>
+				where name like
+				'%'||#{keyword}||'%'
+				order by regdate desc
+			</otherwise>
+		</choose>
+	</sql>
+
 	<update id="updateuser" parameterType="uservo">
-		update userinfo set email=#{email} where userid =#{userid}
+		update userinfo set
+		email=#{email} where userid =#{userid}
 	</update>
 
 	<update id="removeuser">

@@ -47,8 +47,12 @@ public class ProductServiceImpl implements ProductService {
 		return dao.getProdList(cateid);
 	}
 	
-	public List<ProductVO> getProdList() {
-		return dao.getProdList();
+	public List<ProductVO> getProdList(String searchOption, String keyword) throws Exception {
+		return dao.getProdList(searchOption, keyword);
+	}
+	
+	public int countArticle(String searchOption, String keyword) throws Exception {
+		return dao.countArticle(searchOption, keyword);
 	}
 	
 }

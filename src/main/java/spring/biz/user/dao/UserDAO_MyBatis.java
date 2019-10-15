@@ -1,6 +1,8 @@
 package spring.biz.user.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +35,9 @@ public class UserDAO_MyBatis implements UserDAO{
 		return sqlSession.selectOne("userMapper.getuser",userid);
 	}
 
-	public List<UserVO> getUserList() {		
-		return sqlSession.selectList("userMapper.listuser");
-	}
+//	public List<UserVO> getUserList() {		
+//		return sqlSession.selectList("userMapper.listuser");
+//	}
 
 	public int updateUser(UserVO user) {		
 		return sqlSession.update("userMapper.updateuser", user);
@@ -51,6 +53,20 @@ public class UserDAO_MyBatis implements UserDAO{
 	
 	public UserVO getLogin(String email) {
 		return sqlSession.selectOne("userMapper.getLogin", email);
+	}
+
+	public List<UserVO> getUserList(String searchOption, String keyword) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		return sqlSession.selectList("userMapper.listuser", map);
+	}
+
+	public int countArticle(String searchOption, String keyword) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		return sqlSession.selectOne("userMapper.countArticle", map);
 	}
 
 }

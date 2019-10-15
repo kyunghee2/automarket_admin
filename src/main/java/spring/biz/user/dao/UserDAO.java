@@ -11,7 +11,11 @@ public interface UserDAO {
 	
 	UserVO getUser(String uid); 
 	
-	List<UserVO> getUserList(); 
+	//List<UserVO> getUserList(); 
+	
+	List<UserVO> getUserList(String searchOption, String keyword) throws Exception;
+
+	int countArticle(String searchOption, String keyword) throws Exception;
 	
 	int updateUser(UserVO user);
 	

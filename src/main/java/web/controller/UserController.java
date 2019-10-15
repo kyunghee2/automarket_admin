@@ -1,6 +1,7 @@
 package web.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import spring.biz.product.vo.ProductVO;
 import spring.biz.user.service.UserService;
 import spring.biz.user.vo.UserVO;
 import util.AES256Util;
@@ -42,10 +45,20 @@ public class UserController {
 
 	// 관리자 페이지 사용자 리스트
 	@RequestMapping("/user/list.do")
-	public ModelAndView getUserList() {
+	public ModelAndView getUserList(@RequestParam(defaultValue = "email") String searchOption,
+			@RequestParam(defaultValue = "") String keyword) throws Exception {
+		List<UserVO> list = service.getUserList(searchOption, keyword); // 레코드 갯수
+		int count = service.countArticle(searchOption, keyword);
+		
 		ModelAndView view = new ModelAndView();
-
-		view.addObject("users", service.getUserList());
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("count", count);
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		
+		view.addObject("map", map);
 		view.setViewName("user/user_list");
 		return view;
 	}
