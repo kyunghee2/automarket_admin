@@ -11,7 +11,7 @@
 
 	<select id="login" parameterType="spring.biz.user.vo.UserVO"
 		resultType="uservo">
-		select email, cashamt, adminflag, name
+		select email, cashamt, adminflag, name, userid
 		from userinfo
 		where
 		email = #{email} and pwd = #{pwd}

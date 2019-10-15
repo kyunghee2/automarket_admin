@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import spring.biz.product.vo.ProductVO;
 import spring.biz.user.service.UserService;
+import spring.biz.user.vo.LoginVO;
 import spring.biz.user.vo.UserVO;
 import util.AES256Util;
 
@@ -92,17 +93,29 @@ public class UserController {
 	}
 
 	// login api
-	@RequestMapping(value = "/api/login.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/login.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> getlogin(HttpServletRequest request) {
+	public Map<String, Object> getlogin(@RequestBody LoginVO vo,HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		String email = request.getParameter("email");
-		UserVO user = service.getLogin(email);
-		map.put("userid", user.getUserid());
-		map.put("email", user.getEmail());
-		map.put("cashamt", user.getCashamt());
-		map.put("adminflag", user.getAdminflag());
-		map.put("name", user.getName());
+		//String email = request.getParameter("email");
+		String email = vo.getEmail();
+		String pwd = vo.getPwd();
+		
+		UserVO uservo;
+		try {
+			uservo = service.login(email, pwd);
+			if(uservo!=null) {
+				map.put("userid", uservo.getUserid());
+				map.put("email", uservo.getEmail());
+				map.put("cashamt", uservo.getCashamt());
+				map.put("adminflag", uservo.getAdminflag());
+				map.put("name", uservo.getName());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return map;
 	}
 
