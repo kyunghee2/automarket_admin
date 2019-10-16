@@ -153,7 +153,7 @@ public class UserController {
 			String acs_pwd = aes256.aesEncode(vo.getPwd());
 			vo.setPwd(acs_pwd);
 			vo.setDeviceid("");
-
+			System.out.println(vo.getPwd());
 			service.addUser(vo);
 
 		} catch (Exception e) {

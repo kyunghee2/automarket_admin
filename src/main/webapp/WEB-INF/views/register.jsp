@@ -49,7 +49,7 @@
 								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
 										<input type="id" class="form-control form-control-user"
-											id="useremail" name="useremail" placeholder="Email Address">
+											id="email" name="email" placeholder="Email Address">
 									</div>
 
 									<div class="col-sm-6">
@@ -117,14 +117,14 @@
 	<script>
 		$(function() {
 
-			$("#useremail").change(function(e) {
+			$("#email").change(function(e) {
 				e.preventDefault();
 				$("#idCheck").val("");
 			});
 
 			$("#btnIdCheck").click(function(e) {
 				e.preventDefault();
-				var email = $("#useremail").val();
+				var email = $("#email").val();
 
 				if (email != "") {
 					$.ajax({
