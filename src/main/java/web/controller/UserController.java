@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import spring.biz.car.service.CarService;
 import spring.biz.product.vo.ProductVO;
 import spring.biz.user.service.UserService;
 import spring.biz.user.vo.LoginVO;
@@ -32,6 +33,9 @@ import util.AES256Util;
 public class UserController {
 	@Autowired
 	UserService service;
+	@Autowired
+	CarService cservice;
+	
 
 	@Value("${secretkey}")
 	private String key;
@@ -127,6 +131,7 @@ public class UserController {
 		String useremail = vo.getEmail();
 
 		ModelAndView view = new ModelAndView();
+		view.addObject("carlist", cservice.getCarList());
 		view.setViewName("index");
 		return view;
 	}

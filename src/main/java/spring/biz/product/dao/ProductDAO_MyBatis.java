@@ -46,5 +46,9 @@ public class ProductDAO_MyBatis implements ProductDAO {
 		return sqlSession.selectOne("productMapper.countArticle", map);
 	}
 
+	public List<ProductVO> getProdList() {
+		return sqlSession.selectList("productMapper.listcarprod");
+	}
+
 
 }

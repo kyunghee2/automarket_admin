@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import spring.biz.car.dao.CarDAO;
+import spring.biz.car.vo.CarProdVO;
 import spring.biz.car.vo.CarVO;
 
 @Service("carservice")
@@ -24,10 +25,12 @@ public class CarServiceImpl implements CarService{
 		
 	}
 	
-	@Override
 	public List<CarVO> getCarList() {
-		// TODO Auto-generated method stub
 		return dao.getCarList();
+	}
+	
+	public List<CarProdVO> getCarProdList() {
+		return dao.getCarProdList();
 	}
 
 }

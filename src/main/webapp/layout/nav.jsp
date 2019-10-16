@@ -15,9 +15,8 @@
 			id="accordionSidebar">
 
 			<!-- Sidebar - Brand -->
-			<a
-				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="index.jsp">
+			<a class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="${pageContext.request.contextPath}/index.do">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
@@ -40,7 +39,7 @@
 			<!-- Heading -->
 			<div class="sidebar-heading">Addons</div>
 			<!-- Nav Item - 차량관리 -->
-			<li class="nav-item"><a class="nav-link" href="">
+			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/car/list.do">
 					<i class="fas fa-fw fa-chart-area"></i> <span>차량 관리</span>
 			</a></li>
 

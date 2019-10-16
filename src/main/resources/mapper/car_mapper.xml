@@ -7,10 +7,16 @@
 	
 	<!-- 차량 목록 -->
 	<select id="carlist" resultType="carvo">
-		select 
-		*
+		select *
 		from car
-
+		order by carid asc
+	</select>
+	
+	<!-- 차량별 상품 리스트 보기 -->
+	<select id="listcarprod" resultType="carvo">
+		select p.prodid, p.prodnm, p.prodcnt, c.carid, cp.prodcnt
+		from product p, carprod cp, car c
+		where p.prodid = cp.prodid and cp.carid = c.carid
 	</select>
 	
 </mapper>

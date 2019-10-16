@@ -3,8 +3,8 @@ package spring.biz.car.vo;
 public class CarVO {
 	public String carid;
 	public String carstatus;
-	public int destlati;
-	public int destlong;
+	public double destlati;
+	public double destlong;
 	public int temp;
 	public int battery;
 	public String carstart;
@@ -16,8 +16,8 @@ public class CarVO {
 		super();
 	}
 
-	public CarVO(String carid, String carstatus, int destlati, int destlong, int temp, int battery, String carstart,
-			String carerror, String regdate, String moddate) {
+	public CarVO(String carid, String carstatus, double destlati, double destlong, int temp, int battery,
+			String carstart, String carerror, String regdate, String moddate) {
 		super();
 		this.carid = carid;
 		this.carstatus = carstatus;
@@ -47,19 +47,19 @@ public class CarVO {
 		this.carstatus = carstatus;
 	}
 
-	public int getDestlati() {
+	public double getDestlati() {
 		return destlati;
 	}
 
-	public void setDestlati(int destlati) {
+	public void setDestlati(double destlati) {
 		this.destlati = destlati;
 	}
 
-	public int getDestlong() {
+	public double getDestlong() {
 		return destlong;
 	}
 
-	public void setDestlong(int destlong) {
+	public void setDestlong(double destlong) {
 		this.destlong = destlong;
 	}
 
@@ -117,5 +117,8 @@ public class CarVO {
 				+ destlong + ", temp=" + temp + ", battery=" + battery + ", carstart=" + carstart + ", carerror="
 				+ carerror + ", regdate=" + regdate + ", moddate=" + moddate + "]";
 	}
-		
+	
+	
+	
+	
 }

@@ -8,6 +8,8 @@ public interface ProductDAO {
 	int addProd(ProductVO prod);
 
 	ProductVO detailProd(String prod);
+	
+	List<ProductVO> getProdList();
 
 	List<ProductVO> getProdList(String cateid);
 

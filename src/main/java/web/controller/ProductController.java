@@ -52,8 +52,6 @@ public class ProductController {
 		List<ProductVO> list = service.getProdList(searchOption, keyword); // 레코드 갯수
 		int count = service.countArticle(searchOption, keyword);
 		
-		
-		
 		ModelAndView view = new ModelAndView();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -61,12 +59,8 @@ public class ProductController {
 		map.put("count", count);
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);
-		
-		//view.addObject("catelist", cservice.getCategoryList());
 		view.addObject("map", map);
-//		for(int i = 0; i < service.getProdList().size(); i++) {
-//			System.out.println(service.getProdList().get(i));
-//		}
+
 		view.setViewName("prod/prod_alllist");
 		return view;
 	}

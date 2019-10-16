@@ -17,8 +17,8 @@
 <title>AutoMarket - Admin</title>
 
 <!-- Custom fonts for this template-->
-<link href="./vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
+<link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
@@ -52,25 +52,85 @@
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">▷ 차량 위치</h1>
-						
-						<div id="map" style="width:500px;height:400px;"></div>
-							<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aa2101ad56965d7f968552f0fe53a908"></script>
-							<script>
-								var container = document.getElementById('map');
-								var options = {
-									center: new kakao.maps.LatLng(33.450701, 126.570667),
-									level: 3
-								};
-						
-								var map = new kakao.maps.Map(container, options);
-							</script>
-
-						
 					</div>
+					<div id="map" style="width: 500px; height: 400px;"></div>
+					<script type="text/javascript"
+						src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aa2101ad56965d7f968552f0fe53a908"></script>
+					<script>
+						var container = document.getElementById('map');
+						var options = {
+							center : new kakao.maps.LatLng(37.501818,
+									127.039675),
+							level : 5
+						};
+						var map = new kakao.maps.Map(container, options);
+						var positions = new Array();
+						<c:forEach var="item" items="${carlist}">
+						positions.push({
+							title : '${item.carid}',
+							latlng : new kakao.maps.LatLng('${item.destlati}',
+									'${item.destlong}')
+						})
+						</c:forEach>
+
+						// 마커 이미지의 이미지 주소입니다
+						var imageSrc = "./img/marker.png";
+						
+						for (var i = 0; i < positions.length; i++) {
+							// 마커 이미지의 이미지 크기 입니다
+							var imageSize = new kakao.maps.Size(24, 35);
+
+							// 마커 이미지를 생성합니다    
+							var markerImage = new kakao.maps.MarkerImage(
+									imageSrc, imageSize);
+
+							// 마커를 생성합니다
+							var marker = new kakao.maps.Marker({
+								map : map, // 마커를 표시할 지도
+								position : positions[i].latlng, // 마커를 표시할 위치
+								title : "차량"+positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+								image : markerImage
+							// 마커 이미지 
+							});
+						}
+					</script>
+
+					<br>
+
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">▷ 차량 정보</h1>
 					</div>
+					<div class="card shadow mb-4">
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered dataTable" id="dataTable"
+									width="100%" cellspacing="0" role="grid"
+									aria-describedby="dataTable_info" style="width: 100%;">
+									<thead>
+										<tr>
+											<th>차량명</th>
+											<th>시동</th>
+											<th>배터리</th>
+											<th>오류</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- 사용자 리스트를 클라이언트에게 보여주기 위하여 출력. -->
+										<c:forEach var="cdata" items="${carlist}">
+											<tr>
+												<td>${cdata.carid}</td>
+												<td>${cdata.carstart}</td>
+												<td>${cdata.battery}</td>
+												<td>${cdata.carerror}</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">▷ 차량별 제고 부족 현황</h1>
@@ -87,8 +147,8 @@
 		<!-- End of Page Wrapper -->
 
 		<!-- Scroll to Top Button-->
-		<a class="scroll-to-top rounded" href="#page-top"> 
-			<i class="fas fa-angle-up"></i>
+		<a class="scroll-to-top rounded" href="#page-top"> <i
+			class="fas fa-angle-up"></i>
 		</a>
 
 		<!-- Logout Modal-->

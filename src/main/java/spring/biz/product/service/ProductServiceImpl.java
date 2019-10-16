@@ -42,6 +42,10 @@ public class ProductServiceImpl implements ProductService {
 	public ProductVO detailProd(String prodid) {
 		return dao.detailProd(prodid);
 	}
+	
+	public List<ProductVO> getProdList() {
+		return dao.getProdList();
+	}
 
 	public List<ProductVO> getProdList(String cateid) {
 		return dao.getProdList(cateid);
