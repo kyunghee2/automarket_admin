@@ -65,13 +65,13 @@ public class UserServiceImpl implements UserService {
 		return dao.addUser(user);
 	}
 
-	public UserVO getUser(String uid) {
-		return dao.getUser(uid);
+	public UserVO getUser(String email) {
+		return dao.getUser(email);
 	}
 
-//	public List<UserVO> getUserList() {
-//		return dao.getUserList();
-//	}
+	public UserVO getUserInfo(String uid) {
+		return dao.getUserInfo(uid);
+	}
 
 	public int updateUser(UserVO user) {
 		return dao.updateUser(user);

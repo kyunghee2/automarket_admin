@@ -31,13 +31,13 @@ public class UserDAO_MyBatis implements UserDAO{
 		return sqlSession.insert("userMapper.adduser", user);
 	}
 
-	public UserVO getUser(String userid) {		
-		return sqlSession.selectOne("userMapper.getuser",userid);
+	public UserVO getUser(String email) {		
+		return sqlSession.selectOne("userMapper.getuser",email);
 	}
 
-//	public List<UserVO> getUserList() {		
-//		return sqlSession.selectList("userMapper.listuser");
-//	}
+	public UserVO getUserInfo(String userid) {		
+		return sqlSession.selectOne("userMapper.getuserinfo",userid);
+	}
 
 	public int updateUser(UserVO user) {		
 		return sqlSession.update("userMapper.updateuser", user);

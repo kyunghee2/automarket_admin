@@ -23,6 +23,13 @@
 		from userinfo
 		where email = #{email}
 	</select>
+	
+	<select id="getuserinfo" resultType="uservo">
+		select userid, email, cashamt,
+		adminflag, name
+		from userinfo
+		where userid = #{userid}
+	</select>
 
 	<select id="getLogin" resultType="uservo">
 		select userid, email, cashamt,
