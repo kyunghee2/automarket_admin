@@ -188,6 +188,26 @@ public class UserController {
 		}
 		return map;
 	}
+	@RequestMapping(value = "/api/user/info.do", method = RequestMethod.GET)
+	@ResponseBody	
+	public Map<String,Object> getuserinfo(HttpServletRequest request){
+		Map<String, Object> map = new HashMap<String, Object>();
+		String uid = request.getParameter("uid");
+		UserVO vo = null;
+		try {
+			vo = service.getUserInfo(uid);
+		
+			map.put("email", vo.getEmail());
+			map.put("cashamt", vo.getCashamt());
+			map.put("name", vo.getName());
+			map.put("adminflag", vo.getAdminflag());
+		
+		}catch(Exception e) {
+			e.getStackTrace();
+		}
+		
+		return map;
+	}
 
 	@ExceptionHandler(Exception.class)
 	public String Ex(Exception exception, Model model) {

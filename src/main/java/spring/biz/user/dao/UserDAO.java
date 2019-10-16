@@ -9,9 +9,9 @@ public interface UserDAO {
 	
 	int addUser(UserVO user); 
 	
-	UserVO getUser(String uid); 
+	UserVO getUser(String email); 
 	
-	//List<UserVO> getUserList(); 
+	UserVO getUserInfo(String uid); 
 	
 	List<UserVO> getUserList(String searchOption, String keyword) throws Exception;
 
