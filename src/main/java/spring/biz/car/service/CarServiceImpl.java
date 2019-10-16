@@ -29,8 +29,16 @@ public class CarServiceImpl implements CarService{
 		return dao.getCarList();
 	}
 	
-	public List<CarProdVO> getCarProdList() {
-		return dao.getCarProdList();
+	public CarVO getCarLoc(String carid) {
+		return dao.getCarLoc(carid);
+	}
+	
+	public List<CarProdVO> getCarProdList(String carid) {
+		return dao.getCarProdList(carid);
+	}
+
+	public List<CarProdVO> getLackCarList() {
+		return dao.getLackCarList();
 	}
 
 }

@@ -17,14 +17,14 @@
 <title>AutoMarket - Admin</title>
 
 <!-- Custom fonts for this template-->
-<link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
-	type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
+<link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
 <!-- Custom styles for this template-->
 <link href="./css/sb-admin-2.min.css" rel="stylesheet">
+
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=349880fb3af4130c17f186008ba162e1"></script>
 
 </head>
 
@@ -54,46 +54,7 @@
 						<h1 class="h3 mb-0 text-gray-800">▷ 차량 위치</h1>
 					</div>
 					<div id="map" style="width: 500px; height: 400px;"></div>
-					<script type="text/javascript"
-						src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aa2101ad56965d7f968552f0fe53a908"></script>
-					<script>
-						var container = document.getElementById('map');
-						var options = {
-							center : new kakao.maps.LatLng(37.501818,
-									127.039675),
-							level : 5
-						};
-						var map = new kakao.maps.Map(container, options);
-						var positions = new Array();
-						<c:forEach var="item" items="${carlist}">
-						positions.push({
-							title : '${item.carid}',
-							latlng : new kakao.maps.LatLng('${item.destlati}',
-									'${item.destlong}')
-						})
-						</c:forEach>
-
-						// 마커 이미지의 이미지 주소입니다
-						var imageSrc = "./img/marker.png";
-						
-						for (var i = 0; i < positions.length; i++) {
-							// 마커 이미지의 이미지 크기 입니다
-							var imageSize = new kakao.maps.Size(24, 35);
-
-							// 마커 이미지를 생성합니다    
-							var markerImage = new kakao.maps.MarkerImage(
-									imageSrc, imageSize);
-
-							// 마커를 생성합니다
-							var marker = new kakao.maps.Marker({
-								map : map, // 마커를 표시할 지도
-								position : positions[i].latlng, // 마커를 표시할 위치
-								title : "차량"+positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-								image : markerImage
-							// 마커 이미지 
-							});
-						}
-					</script>
+					
 
 					<br>
 
@@ -112,17 +73,34 @@
 											<th>차량명</th>
 											<th>시동</th>
 											<th>배터리</th>
+											<th>차량상태</th>
 											<th>오류</th>
 										</tr>
 									</thead>
 									<tbody>
-										<!-- 사용자 리스트를 클라이언트에게 보여주기 위하여 출력. -->
+										<!-- 사용자 리스트를 클라이언트에게 보여주기 위하여 출력. 
+										00 : 기본값
+										01 : 이동중(예약)
+										02 : 배송완료
+										03 : 회수중
+										04 : 회수완료-->
 										<c:forEach var="cdata" items="${carlist}">
 											<tr>
 												<td>${cdata.carid}</td>
 												<td>${cdata.carstart}</td>
 												<td>${cdata.battery}</td>
-												<td>${cdata.carerror}</td>
+												<td><c:choose>
+														<c:when test="${cdata.carstatus eq '00'}">대기</c:when>
+														<c:when test="${cdata.carstatus eq '01'}">이동중</c:when>
+														<c:when test="${cdata.carstatus eq '02'}">배송완료</c:when>
+														<c:when test="${cdata.carstatus eq '03'}">회수중</c:when>
+														<c:when test="${cdata.carstatus eq '04'}">회수완료</c:when>
+													</c:choose></td>
+												<td><c:choose>
+														<c:when test="${cdata.carerror eq '00'}">정상</c:when>
+														<c:when test="${cdata.carerror eq '01'}">고장1</c:when>
+														<c:when test="${cdata.carerror eq '02'}">고장2</c:when>
+												</c:choose></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -133,7 +111,27 @@
 
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">▷ 차량별 제고 부족 현황</h1>
+						<h1 class="h3 mb-0 text-gray-800">▷ 차량별 재고 부족 현황</h1>
+					</div>
+					<div class="card shadow mb-4">
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered dataTable" border="1"
+									width="100%" cellspacing="0" role="grid"
+									aria-describedby="dataTable_info">
+									<thead>
+										<tr>
+											<th>차량명</th>
+											<th>카테고리</th>
+											<th>제품명</th>
+											<th>수량</th>
+										</tr>
+									</thead>
+									<tbody id="prodList">
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 				<!-- End of Main Content -->
@@ -191,6 +189,71 @@
 		<!-- Page level custom scripts -->
 		<script src="./js/demo/chart-area-demo.js"></script>
 		<script src="./js/demo/chart-pie-demo.js"></script>
+		
+		<!-- Kakao api and 상품 부족 현황 -->
+		<script type="text/javascript">
+$(function() {
+	$.ajax({
+		url : "${pageContext.request.contextPath}/api/car/lackprodlist.do",
+		type : "GET",
+		success : function(data) {
+			console.log(data);
+			$('#prodList').html(" ");
+			$.each(data, function () {
+                $('#prodList').append("<tr><td>" + this.carid + "</td><td>"+this.catenm+"</td><td>"+this.prodnm+"</td><td>" + this.carprodcnt + "</td></tr>");
+            });
+            
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	});
+	
+	var container = document.getElementById('map');
+	var options = {
+		center : new kakao.maps.LatLng(37.501818,
+				127.039675),
+		level : 5
+	};
+	var map = new kakao.maps.Map(container, options);
+	var positions = new Array();
+	<c:forEach var="item" items="${carlist}">
+	positions.push({
+		title : '${item.carid}',
+		latlng : new kakao.maps.LatLng('${item.destlati}',
+				'${item.destlong}')
+	})
+	</c:forEach>
+
+	// 마커 이미지의 이미지 주소입니다
+	var imageSrc = "${pageContext.request.contextPath}/img/marker.png";
+
+	for (var i = 0; i < positions.length; i++) {
+		// 마커 이미지의 이미지 크기 입니다
+		var imageSize = new kakao.maps.Size(24, 35);
+
+		// 마커 이미지를 생성합니다    
+		var markerImage = new kakao.maps.MarkerImage(
+				imageSrc, imageSize);
+
+		// 마커를 생성합니다
+		var marker = new kakao.maps.Marker({
+			map : map, // 마커를 표시할 지도
+			position : positions[i].latlng, // 마커를 표시할 위치
+			title : "차량" + positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+			image : markerImage
+		// 마커 이미지 
+		});
+	}
+	
+});
+
+
+
+</script>
+		
 </body>
+
+
 
 </html>
