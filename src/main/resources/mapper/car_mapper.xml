@@ -37,7 +37,7 @@
 		inner join car
 		c on cp.carid = c.carid
 		inner join category cg on p.cateid = cg.cateid
-		<!--[CDATA[where cp.prodcnt <= 5]] -->
+		<![CDATA[where cp.prodcnt <= 5]]>
 	</select>
 
 
