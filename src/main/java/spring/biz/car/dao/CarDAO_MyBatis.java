@@ -23,7 +23,15 @@ public class CarDAO_MyBatis implements CarDAO{
 		return sqlSession.selectList("carMapper.carlist");
 	}
 	
-	public List<CarProdVO> getCarProdList() {
-		return sqlSession.selectList("carMapper.listcarprod");
+	public CarVO getCarLoc(String carid) {
+		return sqlSession.selectOne("carMapper.carloc", carid);
+	}
+	
+	public List<CarProdVO> getCarProdList(String carid) {
+		return sqlSession.selectList("carMapper.listcarprod", carid);
+	}
+
+	public List<CarProdVO> getLackCarList() {
+		return sqlSession.selectList("carMapper.lacklistcarprod");
 	}
 }

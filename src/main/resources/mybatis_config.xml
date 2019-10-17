@@ -10,6 +10,7 @@
 		<typeAlias type="spring.biz.orderinfo.vo.OrderinfoVO" alias="orderinfovo" />		
 		<typeAlias type="spring.biz.cash.vo.CashVO" alias="cashvo" />		
 		<typeAlias type="spring.biz.car.vo.CarVO" alias="carvo" />		
+		<typeAlias type="spring.biz.car.vo.CarProdVO" alias="carprodvo" />		
 		<typeAlias type="spring.biz.orderinfo.vo.OrderdetailVO" alias="orderdetailvo" />		
 	</typeAliases>
 

@@ -26,20 +26,97 @@
 <!-- Custom styles for this template-->
 <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=349880fb3af4130c17f186008ba162e1"></script>
 <script type="text/javascript">
-	function prodCreate() {
-		f.action = "./prod/add.do";
-		f.method = "post";
-		f.submit();
+	function save() {
+		
 	}
+	
+	$(function() {
+		$("button[name='checkBtn']").each(function(i) {
+			$(this).click(function() {
+				var checkBtn = $(this);
+				console.log("1");
+				// checkBtn.parent() : checkBtn의 부모는 <td>이다.
+				// checkBtn.parent().parent() : <td>의 부모이므로 <tr>이다.
+				var tr = checkBtn.parent().parent();
+				console.log("tr : " + tr.text());
+				var carid = tr.attr('cid');
+				console.log(carid);
+				if (carid != "") {
+					
+					$("#save").css({
+			            display: "inline"
+			        });
 
-	function showinfo() {
-		if (document.getElementById("showinfo").style.display == 'block') {
-			document.getElementById("showinfo").style.display == 'none';
-		} else {
-			document.getElementById("showinfo").style.display = 'block';
-		}
-	}
+					$.ajax({
+						url : "${pageContext.request.contextPath}/car/prodlist.do?carid=" + carid,
+						type : "GET",
+						success : function(data) {
+							console.log(data);
+							$('#prodList').html(" ");
+							$.each(data, function () {
+		                        $('#prodList').append("<tr><td>" + this.prodid + "</td><td>"+this.prodnm+"</td><td>"+this.prodcnt+"</td><td><input type='text' class='form-control' name='prodcnt' placeholder='수량입력'></td><td>" + this.carprodcnt + "</td></tr>");
+		                    });
+		                    
+						},
+						error : function(e) {
+							console.log(e);
+						}
+					});
+				}
+			});
+		});
+		
+		
+		$("button[name='mapBtn']").each(function(i) {
+			$(this).click(function() {
+				var mapBtn = $(this);
+				console.log("1");
+				// checkBtn.parent() : checkBtn의 부모는 <td>이다.
+				// checkBtn.parent().parent() : <td>의 부모이므로 <tr>이다.
+				var tr = mapBtn.parent().parent();
+				console.log("tr : " + tr.text());
+				var carid = tr.attr('cid');
+				console.log(carid);
+				if (carid != "") {
+					$.ajax({
+						url : "${pageContext.request.contextPath}/car/location.do?carid=" + carid,
+						type : "GET",
+						success : function(data) {
+							console.log(data.destlati);
+							console.log(data.destlong);
+							var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+						    mapOption = { 
+						        center: new kakao.maps.LatLng(data.destlati, data.destlong), // 지도의 중심좌표
+						        level: 3 // 지도의 확대 레벨
+						    };
+
+							var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+							// 마커가 표시될 위치입니다 
+							var markerPosition  = new kakao.maps.LatLng(data.destlati, data.destlong); 
+
+							// 마커를 생성합니다
+							var marker = new kakao.maps.Marker({
+						 	   position: markerPosition
+							});
+
+							// 마커가 지도 위에 표시되도록 설정합니다
+							marker.setMap(map);
+							
+		                    
+						},
+						error : function(e) {
+							console.log(e);
+						}
+					});
+				}
+			});
+		});
+		
+	});
 </script>
 </head>
 
@@ -86,56 +163,54 @@
 									<tbody>
 										<!-- 사용자 리스트를 클라이언트에게 보여주기 위하여 출력. -->
 										<c:forEach var="cdata" items="${carlist}">
-											<tr>
+											<tr cid="${cdata.carid}">
 												<td>${cdata.carid}</td>
 												<td>${cdata.carstart}</td>
 												<td>${cdata.battery}</td>
-												<td>${cdata.carerror}</td>
-												<td><button onclick="" class="btn btn-primary">위치확인</button></td>
-												<td><button onclick="javascript:showinfo()"
-														class="btn btn-primary">상품등록</button></td>
+												<td><c:choose>
+														<c:when test="${cdata.carerror eq '00'}">정상</c:when>
+														<c:when test="${cdata.carerror eq '01'}">고장1</c:when>
+														<c:when test="${cdata.carerror eq '02'}">고장2</c:when>
+												</c:choose></td>
+												<td><button id="mapBtn" name="mapBtn" class="btn btn-primary">위치확인</button></td>
+												<td><button class="btn btn-primary" id="checkBtn"
+														name="checkBtn">상품등록</button></td>
 											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
-
-
-								<table class="table table-bordered dataTable" id="showinfo"
-									width="100%" cellspacing="0" role="grid"
-									aria-describedby="dataTable_info" style="display: none">
+								
+								<table class="table table-bordered dataTable"  border="1" 
+								width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info">
 									<thead>
 										<tr>
-											<th>상품 id</th>
-											<th>상품명</th>
-											<th>본사 재고수량</th>
+											<th>제품ID</th>
+											<th>제품명</th>
+											<th>본사 재고 수량</th>
 											<th>등록 수량</th>
-											<th>현재 차량 수량</th>
+											<th>차량 현재 수량</th>
 										</tr>
 									</thead>
-
-									<tbody>
-										<!-- 사용자 리스트를 클라이언트에게 보여주기 위하여 출력. -->
-										<c:forEach  items="${prodlist}" varStatus="status">
-											<tr>
-												<td>${prodlist[status.index].prodid}</td>
-												<td>${prodlist[status.index].prodnm}</td>
-												<td>${prodlist[status.index].prodcnt}</td>
-												<td></td>
-												<td></td>
-											</tr>
-										</c:forEach>
+									<tbody id="prodList">
 									</tbody>
 								</table>
-
-
-
 							</div>
 						</div>
 					</div>
-
+					
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">차량 정보</h6>
+						</div>
+						<div id="map" style="width: 500px; height: 400px;"></div>
+					</div>
+					
+					
 					<button
 						onclick="location.href='${pageContext.request.contextPath}/index.do'"
 						class="btn btn-primary">Home</button>
+						
+					<button id="save" onclick="save()" class="btn btn-primary" style="display:none">저장</button>
 
 
 				</div>

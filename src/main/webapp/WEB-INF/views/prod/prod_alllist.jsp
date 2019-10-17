@@ -97,7 +97,7 @@
 												<td>${pdata.costprice}</td>
 												<td>${pdata.discount}</td>
 												<td>${pdata.expirydate}</td>
-												<td>${pdata.imgpath}</td>
+												<td><img src="${pageContext.request.contextPath}${pdata.imgpath}" style="width:60px;height:60px;"/></td>
 											</tr>
 										</c:forEach>
 									</tbody>

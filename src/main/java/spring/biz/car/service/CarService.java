@@ -10,6 +10,10 @@ public interface CarService {
 
 	List<CarVO> getCarList();
 	
-	List<CarProdVO> getCarProdList();
+	CarVO getCarLoc(String carid);
+	
+	List<CarProdVO> getCarProdList(String carid);
+	
+	List<CarProdVO> getLackCarList();
 	
 }
