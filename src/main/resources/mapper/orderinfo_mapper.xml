@@ -50,9 +50,10 @@
 	
 	<!--  사용자별 전체 주문내역 -->
 	<select id="orderinfolist" resultType="orderinfovo">
-		select orderid, userid, orderdate, receiptaddr, carid, totalprice
+		select orderid, userid, orderdate, receiptaddr, carid, totalprice, receiptkey
 		from orderinfo
 		where userid = #{userid}
+		order by orderdate desc
 	</select>
 
 </mapper>
